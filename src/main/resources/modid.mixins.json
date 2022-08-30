@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "mixins",
+  "compatibilityLevel": "JAVA_18",
+  "mixins": [
+  ],
+  "client": [
+    "ClientPlayerInteractionManagerMixin",
+    "DirectConnectScreenMixin",
+    "DisconnectedScreenMixin",
+    "MinecraftClientMixin",
+    "ModSettingsInjectorMixin",
+    "MultiplayerScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

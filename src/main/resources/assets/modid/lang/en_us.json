@@ -1,0 +1,19 @@
+{
+  "category.modid.cheat": "Cheats",
+  "menu.modid.mod_settings": "Cheats",
+  "key.modid.cheat.flight": "Toggle Fly",
+  "key.modid.cheat.fullbright": "Toggle FullBright",
+  "key.modid.cheat.speed": "Toggle Speed",
+  "key.modid.cheat.noclip": "Toggle NoClip",
+  "key.modid.cheat.fastbreak": "Toggle FastBreak",
+  "cheat.modid.flight.name": "Fly",
+  "cheat.modid.flight.description": "Allows you to fly like in creative mode",
+  "cheat.modid.fullbright.name": "FullBright",
+  "cheat.modid.fullbright.description": "Allows you to always see like it's daytime.",
+  "cheat.modid.speed.name": "Speed",
+  "cheat.modid.speed.description": "Allows you to walk or fly faster.",
+  "cheat.modid.noclip.name": "NoClip",
+  "cheat.modid.noclip.description": "Allows you to walk through walls.",
+  "cheat.modid.fastbreak.name": "FastBreak",
+  "cheat.modid.fastbreak.description": "Allows you to break blocks faster."
+}

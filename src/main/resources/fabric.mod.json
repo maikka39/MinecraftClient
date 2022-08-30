@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "modid",
+  "version": "${version}",
+  "name": "MinecraftClient",
+  "description": "Includes some cheats.",
+  "authors": [
+    "maik_dev"
+  ],
+  "contact": {
+    "homepage": "https://maik.dev/",
+    "sources": "https://github.com/maikka39/MinecraftClient"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/modid/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "MainKt::init"
+    ],
+    "client": [
+      "MainKt::clientInit"
+    ]
+  },
+  "mixins": [
+    "modid.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.8.7",
+    "fabric": "*",
+    "fabric-language-kotlin": "*",
+    "minecraft": "1.18.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
