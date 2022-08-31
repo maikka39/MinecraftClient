@@ -1,9 +1,8 @@
 package cheats
 
-import utils.Global.Client
+import Logger
 import cheats.interfaces.Cheat
 import cheats.interfaces.Keybinded
-import mu.KotlinLogging
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
@@ -12,8 +11,7 @@ import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import org.lwjgl.glfw.GLFW
-
-private val logger = KotlinLogging.logger {}
+import utils.Global.Client
 
 class FullBright : Cheat, Keybinded {
     override var enabled = false
@@ -24,11 +22,6 @@ class FullBright : Cheat, Keybinded {
 
     override val name = TranslatableText("cheat.modid.fullbright.name")
     override val description = TranslatableText("cheat.modid.fullbright.description")
-
-    override fun initialize() {
-        super.initialize()
-    }
-
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(
             "key.modid.cheat.fullbright", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B, "category.modid.cheat"
@@ -36,7 +29,7 @@ class FullBright : Cheat, Keybinded {
     )!!
 
     private fun onEnable() {
-        logger.info("Enabling fullbright...")
+        Logger.info("Enabling fullbright...")
 
         Client.getPlayer()?.let {
             it.sendMessage(Text.of("Enabling fullbright!"), false)
@@ -55,7 +48,7 @@ class FullBright : Cheat, Keybinded {
     }
 
     private fun onDisable() {
-        logger.info("Disabling fullbright...")
+        Logger.info("Disabling fullbright...")
 
         Client.getPlayer()?.let {
             it.sendMessage(Text.of("Disabling fullbright!"), false)

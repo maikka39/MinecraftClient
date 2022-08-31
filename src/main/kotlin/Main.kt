@@ -1,24 +1,23 @@
-import utils.Global.Cheats
+import event.EventManager
+import event.registerEventsInObject
+import events.client.InitializeEvent
 import mu.KotlinLogging
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import utils.Global.Cheats
 
-private val logger = KotlinLogging.logger {}
+val Logger = KotlinLogging.logger {}
 
 @Suppress("unused")
 fun init() {
-    logger.info("Init")
+    Logger.info("Init")
+    Cheats.forEach { registerEventsInObject(it) }
+    EventManager.notify(InitializeEvent())
 }
 
 @Suppress("unused")
 @Environment(EnvType.CLIENT)
 fun clientInit() {
-    logger.info("Client init")
-
-    logger.info("Initializing cheats")
-    Cheats.forEach { cheat ->
-        logger.info("Initializing ${cheat.name.string}...")
-        cheat.initialize()
-    }
-    logger.info("Finished initializing cheats")
+    Logger.info("Client init")
+    EventManager.notify(InitializeEvent.Client())
 }

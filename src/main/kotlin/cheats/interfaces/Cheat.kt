@@ -7,7 +7,4 @@ interface Cheat {
 
     val name: TranslatableText
     val description: TranslatableText
-
-
-    fun initialize(): Unit
 }

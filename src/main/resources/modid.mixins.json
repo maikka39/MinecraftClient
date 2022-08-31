@@ -5,12 +5,14 @@
   "mixins": [
   ],
   "client": [
+    "ClientConnectionMixin",
     "ClientPlayerInteractionManagerMixin",
     "DirectConnectScreenMixin",
     "DisconnectedScreenMixin",
     "MinecraftClientMixin",
     "ModSettingsInjectorMixin",
-    "MultiplayerScreenMixin"
+    "MultiplayerScreenMixin",
+    "PlayerMoveC2SPacketAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

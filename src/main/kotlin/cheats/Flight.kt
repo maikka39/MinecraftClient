@@ -1,10 +1,11 @@
 package cheats
 
-import utils.Global.Client
+import Logger
 import cheats.interfaces.Cheat
 import cheats.interfaces.Keybinded
-import mu.KotlinLogging
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import event.EventHandler
+import events.packets.PacketEvent
+import mixins.PlayerMoveC2SPacketAccessor
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
@@ -12,8 +13,7 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
 import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import org.lwjgl.glfw.GLFW
-
-private val logger = KotlinLogging.logger {}
+import utils.Global.Client
 
 class Flight : Cheat, Keybinded {
     override var enabled = false
@@ -32,7 +32,7 @@ class Flight : Cheat, Keybinded {
     )!!
 
     private fun onEnable() {
-        logger.info("Enabling flying mode...")
+        Logger.info("Enabling flying mode...")
 
         Client.getPlayer()?.let {
             it.sendMessage(Text.of("Enabling flying!"), false)
@@ -42,7 +42,7 @@ class Flight : Cheat, Keybinded {
     }
 
     private fun onDisable() {
-        logger.info("Disabling flying mode...")
+        Logger.info("Disabling flying mode...")
 
         Client.getPlayer()?.let {
             it.sendMessage(Text.of("Disabling flying!"), false)
@@ -52,38 +52,28 @@ class Flight : Cheat, Keybinded {
         }
     }
 
+    private var lastModifiedTime: Long = 0
+    private var lastY = Double.MAX_VALUE
 
-    override fun initialize() {
-        super.initialize()
+    @EventHandler(PacketEvent.Send::class)
+    private fun onSendPacked(event: PacketEvent.Send) {
+        if (!enabled) return
+        if (event.packet !is PlayerMoveC2SPacket) return
+        val packet = event.packet
 
-        startKickPreventionLoop()
-    }
+        val currentTime = System.currentTimeMillis()
+        val currentY: Double = packet.getY(Double.MAX_VALUE)
 
-    private fun startKickPreventionLoop() {
-        var counter = 0
-
-        ClientTickEvents.END_CLIENT_TICK.register {
-            Client.getPlayer()?.let { player ->
-//                enabled = player.abilities.allowFlying == true
-
-                if (!enabled || !player.abilities.flying) return@register
-
-                counter++
-
-                if (counter > 20) {
-                    sendDescentPacket()
-                    counter = 0
-                }
+        if (currentY != Double.MAX_VALUE) {
+            if (currentTime - lastModifiedTime > 1000 &&
+                lastY != Double.MAX_VALUE &&
+                Client.getWorld()!!.getBlockState(Client.getPlayer()!!.blockPos.down()).isAir
+            ) {
+                (packet as PlayerMoveC2SPacketAccessor).y = lastY - 0.03130
+                lastModifiedTime = currentTime
+            } else {
+                lastY = currentY
             }
         }
-    }
-
-    private fun sendDescentPacket() {
-        val player = Client.getPlayer()!!
-        Client.getNetworkHandler()!!.sendPacket(
-            PlayerMoveC2SPacket.PositionAndOnGround(
-                player.x, player.y - 0.4, player.z, player.isOnGround
-            )
-        )
     }
 }

@@ -1,10 +1,10 @@
 package cheats
 
-import utils.Global.Client
+import Logger
 import cheats.interfaces.Cheat
 import cheats.interfaces.Keybinded
-import mu.KotlinLogging
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import event.EventHandler
+import events.world.TickEvent
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
@@ -13,8 +13,7 @@ import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import net.minecraft.util.math.Direction
 import org.lwjgl.glfw.GLFW
-
-private val logger = KotlinLogging.logger {}
+import utils.Global.Client
 
 class FastBreak : Cheat, Keybinded {
     override var enabled = false
@@ -32,42 +31,38 @@ class FastBreak : Cheat, Keybinded {
         )
     )!!
 
-    override fun initialize() {
-        super.initialize()
+    @EventHandler(TickEvent.Post::class)
+    private fun breakBlockIfMining() {
+        Client.getInteractionManager()?.let { interactionManager ->
+            if (!enabled || !interactionManager.isBreakingBlock()) return
+            println("Test 2")
 
-        ClientTickEvents.END_CLIENT_TICK.register {
-            Client.getInteractionManager()?.let { interactionManager ->
-//                println("Test 1")
-                if (!enabled || !interactionManager.isBreakingBlock()) return@register
-                println("Test 2")
+            if (interactionManager.getCurrentBreakingProgress() >= 1) return
+            println("Test 3")
 
-                if (interactionManager.getCurrentBreakingProgress() >= 1) return@register
-                println("Test 3")
+            val action = PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK
+            println("Test 4")
+            val blockPos = interactionManager.getCurrentBreakingPos()!!
+            println("Test 5")
 
-                val action = PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK
-                println("Test 4")
-                val blockPos = interactionManager.getCurrentBreakingPos()!!
-                println("Test 5")
-
-                try {
-                    println("Test 6")
-                    interactionManager.sendPlayerAction2(action, blockPos, Direction.DOWN)
-                    println("Test 7")
-                } catch (e: Exception) {
-                    println(e)
-                }
+            try {
+                println("Test 6")
+                interactionManager.sendPlayerAction2(action, blockPos, Direction.DOWN)
+                println("Test 7")
+            } catch (e: Exception) {
+                println(e)
             }
         }
     }
 
     private fun onEnable() {
-        logger.info("Enabling fastbreak...")
+        Logger.info("Enabling fastbreak...")
 
         Client.getPlayer()?.sendMessage(Text.of("Enabling fastbreak!"), false)
     }
 
     private fun onDisable() {
-        logger.info("Disabling fastbreak...")
+        Logger.info("Disabling fastbreak...")
 
         Client.getPlayer()?.sendMessage(Text.of("Disabling fastbreak!"), false)
     }
