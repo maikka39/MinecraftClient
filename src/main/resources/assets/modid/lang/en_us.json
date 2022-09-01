@@ -1,6 +1,8 @@
 {
   "category.modid.cheat": "Cheats",
+  "category.modid.menu": "Cheat Menus",
   "menu.modid.mod_settings": "Cheats",
+  "key.modid.menu.cheatmenu.open": "Open cheat toggle menu",
   "key.modid.cheat.flight": "Toggle Fly",
   "key.modid.cheat.fullbright": "Toggle FullBright",
   "key.modid.cheat.speed": "Toggle Speed",

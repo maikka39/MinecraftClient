@@ -1,8 +1,7 @@
-package cheats
+package modules.cheats
 
 import Logger
-import cheats.interfaces.Cheat
-import cheats.interfaces.Keybinded
+import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
@@ -27,6 +26,10 @@ class FullBright : Cheat, Keybinded {
             "key.modid.cheat.fullbright", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B, "category.modid.cheat"
         )
     )!!
+
+    override fun onKeybindingPressed() {
+        enabled = !enabled
+    }
 
     private fun onEnable() {
         Logger.info("Enabling fullbright...")

@@ -6,9 +6,11 @@ import mixinterfaces.IClientPlayerInteractionManager
 import mixinterfaces.IMinecraftClient
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.WindowEventHandler
+import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.network.ClientPlayNetworkHandler
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.network.ClientPlayerInteractionManager
+import net.minecraft.client.option.GameOptions
 import net.minecraft.client.world.ClientWorld
 import net.minecraft.util.thread.ReentrantThreadExecutor
 import org.spongepowered.asm.mixin.Mixin
@@ -22,13 +24,30 @@ abstract class MinecraftClientMixin(string: String?) : ReentrantThreadExecutor<R
     IMinecraftClient {
 
     @Shadow
-    private val interactionManager: ClientPlayerInteractionManager? = null
+    private var interactionManager: ClientPlayerInteractionManager? = null
 
     @Shadow
-    private val player: ClientPlayerEntity? = null
+    private var player: ClientPlayerEntity? = null
 
     @Shadow
-    private val world: ClientWorld? = null
+    private var world: ClientWorld? = null
+
+    @Shadow
+    private lateinit var options: GameOptions
+
+    @Shadow
+    private var currentScreen: Screen? = null
+
+    override fun getOptions(): GameOptions {
+        return options
+    }
+
+    override fun getCurrentScreen(): Screen? {
+        return currentScreen
+    }
+    override fun setCurrentScreen(screen: Screen?) {
+        currentScreen = screen
+    }
 
     override fun getNetworkHandler(): ClientPlayNetworkHandler? {
         return player?.networkHandler
@@ -44,6 +63,10 @@ abstract class MinecraftClientMixin(string: String?) : ReentrantThreadExecutor<R
 
     override fun getWorld(): ClientWorld? {
         return world
+    }
+
+    @Shadow
+    override fun setScreen(screen: Screen?) {
     }
 
     @Inject(at = [At("HEAD")], method = ["tick"])

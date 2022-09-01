@@ -9,7 +9,7 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.TranslatableText
 import utils.Global.Cheats
 
-class ModSettingsScreen(parent: Screen, options: GameOptions) :
+class ModSettingsScreen(parent: Screen?, options: GameOptions) :
     GameOptionsScreen(parent, options, TranslatableText("menu.modid.mod_settings")) {
 
     override fun init() {

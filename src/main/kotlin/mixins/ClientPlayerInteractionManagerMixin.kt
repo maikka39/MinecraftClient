@@ -34,14 +34,6 @@ abstract class ClientPlayerInteractionManagerMixin : IClientPlayerInteractionMan
     @Shadow
     abstract override fun breakBlock(pos: BlockPos?): Boolean
 
-//    override fun sendPlayerActionC2SPacket(
-//        action: PlayerActionC2SPacket.Action?,
-//        blockPos: BlockPos?,
-//        direction: Direction?
-//    ) {
-//        TODO("Not yet implemented")
-//    }
-
     @Shadow
     private fun sendPlayerAction(action: PlayerActionC2SPacket.Action, pos: BlockPos, direction: Direction) {}
 

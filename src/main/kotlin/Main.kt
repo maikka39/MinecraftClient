@@ -4,14 +4,14 @@ import events.client.InitializeEvent
 import mu.KotlinLogging
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import utils.Global.Cheats
+import utils.Global.ClientModules
 
 val Logger = KotlinLogging.logger {}
 
 @Suppress("unused")
 fun init() {
     Logger.info("Init")
-    Cheats.forEach { registerEventsInObject(it) }
+    ClientModules.forEach { registerEventsInObject(it) }
     EventManager.notify(InitializeEvent())
 }
 

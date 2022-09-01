@@ -1,8 +1,7 @@
-package cheats
+package modules.cheats
 
 import Logger
-import cheats.interfaces.Cheat
-import cheats.interfaces.Keybinded
+import modules.Keybinded
 import event.EventHandler
 import events.packets.PacketEvent
 import mixins.PlayerMoveC2SPacketAccessor
@@ -30,6 +29,10 @@ class Flight : Cheat, Keybinded {
             "key.modid.cheat.flight", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "category.modid.cheat"
         )
     )!!
+
+    override fun onKeybindingPressed() {
+        enabled = !enabled
+    }
 
     private fun onEnable() {
         Logger.info("Enabling flying mode...")

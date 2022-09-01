@@ -13,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.Inject
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 import utils.LastServerRememberer
 
-
 @Mixin(DisconnectedScreen::class)
 abstract class DisconnectedScreenMixin(title: Text?) : Screen(title) {
     @Shadow

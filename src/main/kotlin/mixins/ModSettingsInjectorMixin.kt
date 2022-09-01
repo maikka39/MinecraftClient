@@ -1,6 +1,5 @@
 package mixins
 
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.Element
 import net.minecraft.client.gui.screen.GameMenuScreen
 import net.minecraft.client.gui.screen.Screen
@@ -12,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.At
 import org.spongepowered.asm.mixin.injection.Inject
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 import screens.ModSettingsScreen
+import utils.Global.Client
 
 @Mixin(GameMenuScreen::class)
 class ModSettingsInjectorMixin constructor(title: Text?) : Screen(title) {
@@ -31,7 +31,7 @@ class ModSettingsInjectorMixin constructor(title: Text?) : Screen(title) {
             x, y, 98, 20, TranslatableText("menu.modid.mod_settings")
         ) {
             client!!.setScreen(
-                ModSettingsScreen(this, MinecraftClient.getInstance().options)
+                ModSettingsScreen(this, Client.getOptions())
             )
         })
     }

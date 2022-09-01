@@ -1,8 +1,7 @@
-package cheats
+package modules.cheats
 
 import Logger
-import cheats.interfaces.Cheat
-import cheats.interfaces.Keybinded
+import modules.Keybinded
 import event.EventHandler
 import events.world.TickEvent
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
@@ -30,6 +29,10 @@ class FastBreak : Cheat, Keybinded {
             "key.modid.cheat.fastbreak", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G, "category.modid.cheat"
         )
     )!!
+
+    override fun onKeybindingPressed() {
+        enabled = !enabled
+    }
 
     @EventHandler(TickEvent.Post::class)
     private fun breakBlockIfMining() {

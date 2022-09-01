@@ -1,8 +1,9 @@
-package cheats.interfaces
+package modules.cheats
 
 import net.minecraft.text.TranslatableText
+import modules.ClientModule
 
-interface Cheat {
+interface Cheat : ClientModule {
     var enabled: Boolean
 
     val name: TranslatableText
