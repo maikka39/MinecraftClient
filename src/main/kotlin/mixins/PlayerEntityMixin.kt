@@ -17,7 +17,7 @@ abstract class PlayerEntityMixin(entityType: EntityType<out LivingEntity>?, worl
     LivingEntity(entityType, world) {
 
     @Inject(at = [At("RETURN")], method = ["getBlockBreakingSpeed"], cancellable = true)
-    fun getBlockBreakingSpeed(block: BlockState?, cir: CallbackInfoReturnable<Float>) {
+    private fun getBlockBreakingSpeed(block: BlockState?, cir: CallbackInfoReturnable<Float>) {
         val speedMine: SpeedMine = Cheats.filterIsInstance<SpeedMine>().first()
 
         if (!speedMine.enabled) return

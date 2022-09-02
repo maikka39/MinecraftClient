@@ -11,6 +11,7 @@
   "key.modid.cheat.spider": "Toggle Spider",
   "key.modid.cheat.nofall": "Toggle NoFall",
   "key.modid.cheat.speedmine": "Toggle Speedmine",
+  "key.modid.cheat.reach": "Toggle Reach",
   "cheat.modid.flight.name": "Fly",
   "cheat.modid.flight.description": "Allows you to fly like in creative mode",
   "cheat.modid.fullbright.name": "FullBright",
@@ -26,5 +27,7 @@
   "cheat.modid.nofall.name": "NoFall",
   "cheat.modid.nofall.description": "Prevents you from receiving fall damage.",
   "cheat.modid.speedmine.name": "Speedmine",
-  "cheat.modid.speedmine.description": "Allows you to mine blocks faster."
+  "cheat.modid.speedmine.description": "Allows you to mine blocks faster.",
+  "cheat.modid.reach.name": "Reach",
+  "cheat.modid.reach.description": "Allows you to reach further with your hands."
 }

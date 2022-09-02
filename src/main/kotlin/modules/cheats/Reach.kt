@@ -10,37 +10,37 @@ import net.minecraft.text.TranslatableText
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
-class SpeedMine : Cheat, Keybinded {
+class Reach : Cheat, Keybinded {
     override var enabled = false
         set(value) {
             field = value
             if (value) onEnable() else onDisable()
         }
 
-    override val name = TranslatableText("cheat.modid.speedmine.name")
-    override val description = TranslatableText("cheat.modid.speedmine.description")
+    override val name = TranslatableText("cheat.modid.reach.name")
+    override val description = TranslatableText("cheat.modid.reach.description")
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(
-            "key.modid.cheat.speedmine", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.modid.cheat"
+            "key.modid.cheat.reach", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.modid.cheat"
         )
     )!!
 
-    var speedModifier: Float = 1.6f
+    var reach: Float = 6f
 
     override fun onKeybindingPressed() {
         enabled = !enabled
     }
 
     private fun onEnable() {
-        Logger.info("Enabling speedmine...")
+        Logger.info("Enabling reach...")
 
-        Client.player?.sendMessage(Text.of("Enabling speedmine!"), false)
+        Client.player?.sendMessage(Text.of("Enabling reach!"), false)
     }
 
     private fun onDisable() {
-        Logger.info("Disabling speedmine...")
+        Logger.info("Disabling reach...")
 
-        Client.player?.sendMessage(Text.of("Disabling speedmine!"), false)
+        Client.player?.sendMessage(Text.of("Disabling reach!"), false)
     }
 }

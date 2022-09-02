@@ -6,6 +6,7 @@
   ],
   "client": [
     "ClientConnectionMixin",
+    "ClientPlayerInteractionManagerMixin",
     "DirectConnectScreenMixin",
     "DisconnectedScreenMixin",
     "MinecraftClientMixin",
