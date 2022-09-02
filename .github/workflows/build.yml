@@ -19,3 +19,9 @@ jobs:
           java-version: 18
       - name: Build with Gradle
         run: ./gradlew build
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: JAR
+          path: build/libs/minecraft-client*.jar
+          retention-days: 5
