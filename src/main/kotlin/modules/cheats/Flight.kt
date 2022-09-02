@@ -77,8 +77,5 @@ class Flight : Cheat, Keybinded {
                 lastY = currentY
             }
         }
-
-        if (Client.player!!.velocity.y < -0.08)
-            packet.onGround = true
     }
 }
