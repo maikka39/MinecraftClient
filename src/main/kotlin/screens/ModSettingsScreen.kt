@@ -3,11 +3,15 @@ package screens
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.screen.option.GameOptionsScreen
+import net.minecraft.client.gui.screen.pack.PackScreen
 import net.minecraft.client.gui.widget.ButtonWidget
+import net.minecraft.client.gui.widget.ButtonWidget.TooltipSupplier
 import net.minecraft.client.option.GameOptions
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import utils.Global.Cheats
+import java.util.function.Consumer
 
 class ModSettingsScreen(parent: Screen?, options: GameOptions) :
     GameOptionsScreen(parent, options, TranslatableText("menu.modid.mod_settings")) {
@@ -22,16 +26,32 @@ class ModSettingsScreen(parent: Screen?, options: GameOptions) :
             val x = this.width / 2 + (if (index % 2 == 0) -102 else 4)
             val y = this.height / 4 + 24 * (index / 2 + 1) + -16
 
-            addDrawableChild(ButtonWidget(
-                x,
-                y,
-                buttonWidth,
-                buttonHeight,
-                TranslatableText(cheat.name.string + ": " + if (cheat.enabled) "ON" else "OFF")
-            ) {
+            val onPress = { _: ButtonWidget ->
                 cheat.enabled = !cheat.enabled
                 MinecraftClient.getInstance().setScreen(ModSettingsScreen(parent, gameOptions))
-            })
+            }
+
+            val onTooltip = object : TooltipSupplier {
+                override fun onTooltip(buttonWidget: ButtonWidget, matrixStack: MatrixStack, i: Int, j: Int) {
+                    this@ModSettingsScreen.renderTooltip(matrixStack, cheat.description, i, j)
+                }
+
+                override fun supply(consumer: Consumer<Text>) {
+                    consumer.accept(cheat.description)
+                }
+            }
+
+            addDrawableChild(
+                ButtonWidget(
+                    x,
+                    y,
+                    buttonWidth,
+                    buttonHeight,
+                    TranslatableText(cheat.name.string + ": " + if (cheat.enabled) "ON" else "OFF"),
+                    onPress,
+                    onTooltip
+                )
+            )
         }
     }
 
