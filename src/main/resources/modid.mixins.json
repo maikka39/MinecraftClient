@@ -11,6 +11,7 @@
     "MinecraftClientMixin",
     "ModSettingsInjectorMixin",
     "MultiplayerScreenMixin",
+    "PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

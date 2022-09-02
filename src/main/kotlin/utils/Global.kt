@@ -14,6 +14,7 @@ object Global {
         Speed(),
         FastBreak(),
         NoFall(),
+        SpeedMine(),
         Spider(),
         CheatMenuOpener(),
     )
