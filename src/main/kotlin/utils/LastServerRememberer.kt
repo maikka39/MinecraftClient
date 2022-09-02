@@ -1,6 +1,5 @@
 package utils
 
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.ConnectScreen
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.network.ServerAddress
@@ -13,7 +12,7 @@ object LastServerRememberer {
     fun reconnect(prevScreen: Screen?) {
         if (lastServer == null) return
         ConnectScreen.connect(
-            prevScreen, Client as MinecraftClient,
+            prevScreen, Client,
             ServerAddress.parse(lastServer!!.address), lastServer
         )
     }

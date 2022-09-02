@@ -39,7 +39,7 @@ class Speed : Cheat, Keybinded {
     private fun afterTick() {
         if (!enabled) return
 
-        Client.getPlayer()?.let {
+        Client.player?.let {
             // return if sneaking or not walking
             if (it.isSneaking || it.forwardSpeed == 0f && it.sidewaysSpeed == 0f)
                 return
@@ -70,12 +70,12 @@ class Speed : Cheat, Keybinded {
     private fun onEnable() {
         Logger.info("Enabling speed...")
 
-        Client.getPlayer()?.sendMessage(Text.of("Enabling speed!"), false)
+        Client.player?.sendMessage(Text.of("Enabling speed!"), false)
     }
 
     private fun onDisable() {
         Logger.info("Disabling speed...")
 
-        Client.getPlayer()?.sendMessage(Text.of("Disabling speed!"), false)
+        Client.player?.sendMessage(Text.of("Disabling speed!"), false)
     }
 }

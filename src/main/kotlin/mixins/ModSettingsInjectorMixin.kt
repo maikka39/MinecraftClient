@@ -31,7 +31,7 @@ class ModSettingsInjectorMixin constructor(title: Text?) : Screen(title) {
             x, y, 98, 20, TranslatableText("menu.modid.mod_settings")
         ) {
             client!!.setScreen(
-                ModSettingsScreen(this, Client.getOptions())
+                ModSettingsScreen(this, Client.options)
             )
         })
     }

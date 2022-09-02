@@ -36,37 +36,28 @@ class FastBreak : Cheat, Keybinded {
 
     @EventHandler(TickEvent.Post::class)
     private fun breakBlockIfMining() {
-        Client.getInteractionManager()?.let { interactionManager ->
-            if (!enabled || !interactionManager.isBreakingBlock()) return
-            println("Test 2")
+        Client.interactionManager?.let { interactionManager ->
+            if (!enabled || !interactionManager.isBreakingBlock) return
 
-            if (interactionManager.getCurrentBreakingProgress() >= 1) return
-            println("Test 3")
+            if (interactionManager.currentBreakingProgress >= 1) return
 
-            val action = PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK
-            println("Test 4")
-            val blockPos = interactionManager.getCurrentBreakingPos()!!
-            println("Test 5")
-
-            try {
-                println("Test 6")
-                interactionManager.sendPlayerAction2(action, blockPos, Direction.DOWN)
-                println("Test 7")
-            } catch (e: Exception) {
-                println(e)
-            }
+            interactionManager.sendPlayerAction(
+                PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK,
+                interactionManager.currentBreakingPos!!,
+                Direction.DOWN
+            )
         }
     }
 
     private fun onEnable() {
         Logger.info("Enabling fastbreak...")
 
-        Client.getPlayer()?.sendMessage(Text.of("Enabling fastbreak!"), false)
+        Client.player?.sendMessage(Text.of("Enabling fastbreak!"), false)
     }
 
     private fun onDisable() {
         Logger.info("Disabling fastbreak...")
 
-        Client.getPlayer()?.sendMessage(Text.of("Disabling fastbreak!"), false)
+        Client.player?.sendMessage(Text.of("Disabling fastbreak!"), false)
     }
 }

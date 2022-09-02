@@ -17,7 +17,7 @@ class CheatMenuOpener : ClientModule, Keybinded {
     )!!
 
     override fun onKeybindingPressed() {
-        if (Client.getCurrentScreen() !is ModSettingsScreen)
-            Client.setScreen(ModSettingsScreen(Client.getCurrentScreen(), Client.getOptions()))
+        if (Client.currentScreen !is ModSettingsScreen)
+            Client.setScreen(ModSettingsScreen(Client.currentScreen, Client.options))
     }
 }

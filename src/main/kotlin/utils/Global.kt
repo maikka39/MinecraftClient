@@ -1,14 +1,20 @@
 package utils
 
-import mixinterfaces.IMinecraftClient
-import modules.cheats.*
-import net.minecraft.client.MinecraftClient
 import modules.ClientModule
+import modules.cheats.*
 import modules.menuopeners.CheatMenuOpener
+import net.minecraft.client.MinecraftClient
 
 object Global {
-    val Client: IMinecraftClient = MinecraftClient.getInstance() as IMinecraftClient
+    val Client: MinecraftClient = MinecraftClient.getInstance()
 
-    val ClientModules: List<ClientModule> = listOf(Flight(), FullBright(), Speed(), FastBreak(), CheatMenuOpener())
+    val ClientModules: List<ClientModule> = listOf(
+        Flight(),
+        FullBright(),
+        Speed(),
+        FastBreak(),
+        CheatMenuOpener(),
+    )
+
     val Cheats: List<Cheat> = ClientModules.filterIsInstance<Cheat>()
 }

@@ -1,10 +1,9 @@
 package modules.cheats
 
 import Logger
-import modules.Keybinded
 import event.EventHandler
 import events.packets.PacketEvent
-import mixins.PlayerMoveC2SPacketAccessor
+import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
@@ -37,7 +36,7 @@ class Flight : Cheat, Keybinded {
     private fun onEnable() {
         Logger.info("Enabling flying mode...")
 
-        Client.getPlayer()?.let {
+        Client.player?.let {
             it.sendMessage(Text.of("Enabling flying!"), false)
 
             it.abilities.allowFlying = true
@@ -47,7 +46,7 @@ class Flight : Cheat, Keybinded {
     private fun onDisable() {
         Logger.info("Disabling flying mode...")
 
-        Client.getPlayer()?.let {
+        Client.player?.let {
             it.sendMessage(Text.of("Disabling flying!"), false)
 
             it.abilities.allowFlying = false
@@ -70,9 +69,9 @@ class Flight : Cheat, Keybinded {
         if (currentY != Double.MAX_VALUE) {
             if (currentTime - lastModifiedTime > 1000 &&
                 lastY != Double.MAX_VALUE &&
-                Client.getWorld()!!.getBlockState(Client.getPlayer()!!.blockPos.down()).isAir
+                Client.world!!.getBlockState(Client.player!!.blockPos.down()).isAir
             ) {
-                (packet as PlayerMoveC2SPacketAccessor).y = lastY - 0.03130
+                packet.y = lastY - 0.03130
                 lastModifiedTime = currentTime
             } else {
                 lastY = currentY

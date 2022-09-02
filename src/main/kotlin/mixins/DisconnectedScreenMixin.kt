@@ -24,10 +24,10 @@ abstract class DisconnectedScreenMixin(title: Text?) : Screen(title) {
 
     @Inject(at = [At("TAIL")], method = ["init()V"])
     private fun onInit(ci: CallbackInfo) {
-        addReconnectButtons();
+        addReconnectButton();
     }
 
-    private fun addReconnectButtons() {
+    private fun addReconnectButton() {
         val backButtonX = width / 2 - 100
         val backButtonY = (height / 2 + reasonHeight / 2 + 9).coerceAtMost(height - 30)
 

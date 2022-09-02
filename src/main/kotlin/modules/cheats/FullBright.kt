@@ -34,7 +34,7 @@ class FullBright : Cheat, Keybinded {
     private fun onEnable() {
         Logger.info("Enabling fullbright...")
 
-        Client.getPlayer()?.let {
+        Client.player?.let {
             it.sendMessage(Text.of("Enabling fullbright!"), false)
 
             it.addStatusEffect(
@@ -53,7 +53,7 @@ class FullBright : Cheat, Keybinded {
     private fun onDisable() {
         Logger.info("Disabling fullbright...")
 
-        Client.getPlayer()?.let {
+        Client.player?.let {
             it.sendMessage(Text.of("Disabling fullbright!"), false)
 
             it.removeStatusEffect(StatusEffects.NIGHT_VISION)
