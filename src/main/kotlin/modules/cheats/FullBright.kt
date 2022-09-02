@@ -1,6 +1,8 @@
 package modules.cheats
 
 import Logger
+import event.EventHandler
+import events.world.TickEvent
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
@@ -31,32 +33,47 @@ class FullBright : Cheat, Keybinded {
         enabled = !enabled
     }
 
+    @EventHandler(TickEvent.Post::class)
+    private fun afterTick() {
+        if (!enabled) return
+
+        Client.player?.let {
+            if (!it.hasStatusEffect(StatusEffects.NIGHT_VISION)) {
+                it.addStatusEffect(
+                    StatusEffectInstance(
+                        StatusEffects.NIGHT_VISION,
+                        10,
+                        Int.MAX_VALUE,
+                        false,
+                        false,
+                        false
+                    )
+                )
+                println("Added effect")
+            }
+
+            val effect = it.getStatusEffect(StatusEffects.NIGHT_VISION)!!
+
+            if (effect.duration < 10)
+                effect.duration = 10
+        }
+    }
+
     private fun onEnable() {
         Logger.info("Enabling fullbright...")
 
-        Client.player?.let {
-            it.sendMessage(Text.of("Enabling fullbright!"), false)
-
-            it.addStatusEffect(
-                StatusEffectInstance(
-                    StatusEffects.NIGHT_VISION,
-                    Int.MAX_VALUE,
-                    Int.MAX_VALUE,
-                    false,
-                    false,
-                    false
-                )
-            )
-        }
+        Client.player?.sendMessage(Text.of("Enabling fullbright!"), false)
     }
 
     private fun onDisable() {
         Logger.info("Disabling fullbright...")
 
         Client.player?.let {
-            it.sendMessage(Text.of("Disabling fullbright!"), false)
+            val effect = it.getStatusEffect(StatusEffects.NIGHT_VISION)
+            if (effect != null && effect.duration <= 10)
+                it.removeStatusEffect(StatusEffects.NIGHT_VISION)
 
-            it.removeStatusEffect(StatusEffects.NIGHT_VISION)
+            it.sendMessage(Text.of("Disabling fullbright!"), false)
         }
     }
 }

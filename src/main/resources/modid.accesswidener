@@ -10,3 +10,4 @@ mutable field net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket y D
 accessible field net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket y D
 mutable field net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket onGround Z
 accessible field net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket onGround Z
+accessible field net/minecraft/entity/effect/StatusEffectInstance duration I
