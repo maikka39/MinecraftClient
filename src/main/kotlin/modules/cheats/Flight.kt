@@ -58,7 +58,7 @@ class Flight : Cheat, Keybinded {
     private var lastY = Double.MAX_VALUE
 
     @EventHandler(PacketEvent.Send::class)
-    private fun onSendPacked(event: PacketEvent.Send) {
+    private fun onSendPacket(event: PacketEvent.Send) {
         if (!enabled) return
         if (event.packet !is PlayerMoveC2SPacket) return
         val packet = event.packet
@@ -77,5 +77,8 @@ class Flight : Cheat, Keybinded {
                 lastY = currentY
             }
         }
+
+        if (Client.player!!.velocity.y < -0.08)
+            packet.onGround = true
     }
 }

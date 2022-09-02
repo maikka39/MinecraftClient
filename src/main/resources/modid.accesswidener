@@ -8,3 +8,5 @@ accessible field net/minecraft/client/network/ClientPlayerInteractionManager cur
 accessible field net/minecraft/client/network/ClientPlayerInteractionManager currentBreakingPos Lnet/minecraft/util/math/BlockPos;
 mutable field net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket y D
 accessible field net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket y D
+mutable field net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket onGround Z
+accessible field net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket onGround Z

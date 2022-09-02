@@ -9,6 +9,7 @@
   "key.modid.cheat.noclip": "Toggle NoClip",
   "key.modid.cheat.fastbreak": "Toggle FastBreak",
   "key.modid.cheat.spider": "Toggle Spider",
+  "key.modid.cheat.nofall": "Toggle NoFall",
   "cheat.modid.flight.name": "Fly",
   "cheat.modid.flight.description": "Allows you to fly like in creative mode",
   "cheat.modid.fullbright.name": "FullBright",
@@ -20,5 +21,7 @@
   "cheat.modid.fastbreak.name": "FastBreak",
   "cheat.modid.fastbreak.description": "Allows you to break blocks faster.",
   "cheat.modid.spider.name": "Spider",
-  "cheat.modid.spider.description": "Allows you to climb walls like a spider."
+  "cheat.modid.spider.description": "Allows you to climb walls like a spider.",
+  "cheat.modid.nofall.name": "NoFall",
+  "cheat.modid.nofall.description": "Prevents you from receiving fall damage."
 }
