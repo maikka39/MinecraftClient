@@ -9,6 +9,7 @@ object Global {
     val Client: MinecraftClient = MinecraftClient.getInstance()
 
     val ClientModules: List<ClientModule> = listOf(
+        AutoFish(),
         FastBreak(),
         Flight(),
         FullBright(),

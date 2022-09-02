@@ -12,6 +12,7 @@
   "key.modid.cheat.nofall": "Toggle NoFall",
   "key.modid.cheat.speedmine": "Toggle Speedmine",
   "key.modid.cheat.reach": "Toggle Reach",
+  "key.modid.cheat.autofish": "Toggle AutoFish",
   "cheat.modid.flight.name": "Fly",
   "cheat.modid.flight.description": "Allows you to fly like in creative mode",
   "cheat.modid.fullbright.name": "FullBright",
@@ -29,5 +30,7 @@
   "cheat.modid.speedmine.name": "Speedmine",
   "cheat.modid.speedmine.description": "Allows you to mine blocks faster.",
   "cheat.modid.reach.name": "Reach",
-  "cheat.modid.reach.description": "Allows you to reach further with your hands."
+  "cheat.modid.reach.description": "Allows you to reach further with your hands.",
+  "cheat.modid.autofish.name": "AutoFish",
+  "cheat.modid.autofish.description": "Automatically casts and reels in a fishing rot."
 }

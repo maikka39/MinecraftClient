@@ -12,7 +12,8 @@
     "MinecraftClientMixin",
     "ModSettingsInjectorMixin",
     "MultiplayerScreenMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "SoundSystemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
