@@ -13,6 +13,7 @@ object Global {
         FullBright(),
         Speed(),
         FastBreak(),
+        Spider(),
         CheatMenuOpener(),
     )
 
