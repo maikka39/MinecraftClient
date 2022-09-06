@@ -13,6 +13,7 @@
   "key.modid.cheat.speedmine": "Toggle Speedmine",
   "key.modid.cheat.reach": "Toggle Reach",
   "key.modid.cheat.autofish": "Toggle AutoFish",
+  "key.modid.cheat.loantikick": "Toggle LO Anti Kick",
   "key.modid.cheat.afkendermanfarmer": "Toggle AFK Enderman Farmer",
   "cheat.modid.flight.name": "Fly",
   "cheat.modid.flight.description": "Allows you to fly like in creative mode",
@@ -35,5 +36,7 @@
   "cheat.modid.autofish.name": "AutoFish",
   "cheat.modid.autofish.description": "Automatically casts and reels in a fishing rot.",
   "cheat.modid.afkendermanfarmer.name": "AFK Enderman Farmer",
-  "cheat.modid.afkendermanfarmer.description": "Automatically kills Endermans within your reach."
+  "cheat.modid.afkendermanfarmer.description": "Automatically kills Endermans within your reach.",
+  "cheat.modid.loantikick.name": "LO Anti Kick",
+  "cheat.modid.loantikick.description": "Prevents you from being kicked from LiveOverflow's server."
 }

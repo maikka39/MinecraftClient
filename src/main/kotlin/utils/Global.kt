@@ -14,6 +14,7 @@ object Global {
         FastBreak(),
         Flight(),
         FullBright(),
+        LOAntiKick(),
         NoFall(),
         Reach(),
         Speed(),
