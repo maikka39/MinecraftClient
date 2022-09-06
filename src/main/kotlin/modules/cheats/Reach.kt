@@ -10,7 +10,7 @@ import net.minecraft.text.TranslatableText
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
-class Reach : Cheat, Keybinded {
+object Reach : Cheat, Keybinded {
     override var enabled = false
         set(value) {
             field = value

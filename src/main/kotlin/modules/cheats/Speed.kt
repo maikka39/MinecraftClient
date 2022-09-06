@@ -15,7 +15,7 @@ import utils.Global.Client
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class Speed : Cheat, Keybinded {
+object Speed : Cheat, Keybinded {
     override var enabled = false
         set(value) {
             field = value

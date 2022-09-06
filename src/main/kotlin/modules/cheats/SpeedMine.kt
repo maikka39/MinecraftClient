@@ -10,7 +10,7 @@ import net.minecraft.text.TranslatableText
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
-class SpeedMine : Cheat, Keybinded {
+object SpeedMine : Cheat, Keybinded {
     override var enabled = false
         set(value) {
             field = value

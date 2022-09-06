@@ -14,7 +14,7 @@ import net.minecraft.util.math.Direction
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
-class FastBreak : Cheat, Keybinded {
+object FastBreak : Cheat, Keybinded {
     override var enabled = false
         set(value) {
             field = value

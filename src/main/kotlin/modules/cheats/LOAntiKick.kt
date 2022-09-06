@@ -13,7 +13,7 @@ import net.minecraft.text.TranslatableText
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
-class LOAntiKick : Cheat, Keybinded {
+object LOAntiKick : Cheat, Keybinded {
     override var enabled = true
         set(value) {
             field = value

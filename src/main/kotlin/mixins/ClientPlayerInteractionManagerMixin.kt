@@ -12,10 +12,8 @@ import utils.Global
 abstract class ClientPlayerInteractionManagerMixin {
     @Inject(at = [At("RETURN")], method = ["getReachDistance"], cancellable = true)
     private fun getReachDistance(info: CallbackInfoReturnable<Float>) {
-        val reach: Reach = Global.Cheats.filterIsInstance<Reach>().first()
+        if (!Reach.enabled) return
 
-        if (!reach.enabled) return
-
-        info.returnValue = reach.reach
+        info.returnValue = Reach.reach
     }
 }

@@ -12,7 +12,7 @@ import net.minecraft.util.Hand
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
-class AfkEndermanFarmer : Cheat, Keybinded {
+object AfkEndermanFarmer : Cheat, Keybinded {
     override var enabled = false
 
     override val name = TranslatableText("cheat.modid.afkendermanfarmer.name")

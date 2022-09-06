@@ -17,7 +17,7 @@ import org.lwjgl.glfw.GLFW
 import utils.DelayedAction
 import utils.Global.Client
 
-class AutoFish : Cheat, Keybinded {
+object AutoFish : Cheat, Keybinded {
     override var enabled = false
         set(value) {
             field = value

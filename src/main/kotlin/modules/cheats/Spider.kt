@@ -13,7 +13,7 @@ import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
-class Spider : Cheat, Keybinded {
+object Spider : Cheat, Keybinded {
     override var enabled = false
         set(value) {
             field = value
