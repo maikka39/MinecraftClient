@@ -13,6 +13,7 @@
   "key.modid.cheat.speedmine": "Toggle Speedmine",
   "key.modid.cheat.reach": "Toggle Reach",
   "key.modid.cheat.autofish": "Toggle AutoFish",
+  "key.modid.cheat.afkendermanfarmer": "Toggle AFK Enderman Farmer",
   "cheat.modid.flight.name": "Fly",
   "cheat.modid.flight.description": "Allows you to fly like in creative mode",
   "cheat.modid.fullbright.name": "FullBright",
@@ -32,5 +33,7 @@
   "cheat.modid.reach.name": "Reach",
   "cheat.modid.reach.description": "Allows you to reach further with your hands.",
   "cheat.modid.autofish.name": "AutoFish",
-  "cheat.modid.autofish.description": "Automatically casts and reels in a fishing rot."
+  "cheat.modid.autofish.description": "Automatically casts and reels in a fishing rot.",
+  "cheat.modid.afkendermanfarmer.name": "AFK Enderman Farmer",
+  "cheat.modid.afkendermanfarmer.description": "Automatically kills Endermans within your reach."
 }
