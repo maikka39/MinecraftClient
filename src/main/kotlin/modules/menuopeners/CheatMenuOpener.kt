@@ -12,7 +12,7 @@ import utils.Global.Client
 object CheatMenuOpener : ClientModule, Keybinded {
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(
-            "key.modid.menu.cheatmenu.open", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_COMMA, "category.modid.menu"
+            "key.modid.menu.cheatmenu.open", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_COMMA, "category.modid.cheat"
         )
     )!!
 
