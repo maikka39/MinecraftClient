@@ -26,7 +26,7 @@ object Flight : Cheat, Keybinded {
 
     override val options: List<Option> = listOf(
         DoubleOption(
-            "options.modid.flight.speed",
+            "options.modid.flight.flyingSpeed",
             0.01,
             1.0,
             0.01f,

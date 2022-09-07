@@ -4,7 +4,7 @@
   "options.modid.autofish.reelInDelay": "Reel in delay ticks",
   "options.modid.autofish.castDelay": "Cast delay ticks",
   "options.modid.autofish.range": "Range",
-  "options.modid.flight.speed": "Speed",
+  "options.modid.flight.flyingSpeed": "Speed",
   "options.modid.reach.distance": "Distance",
   "options.modid.speedmine.speedModifier": "Speed modifier",
   "options.modid.spider.climbingSpeed": "Climbing speed",
