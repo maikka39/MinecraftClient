@@ -25,13 +25,14 @@ object Spider : Cheat, Keybinded {
 
     override val options: List<Option> = listOf(
         DoubleOption(
-            "options.modid.spider.climbingSpeed",
+            "options.modid.spider.climbingSpeed.name",
             0.05,
             1.0,
             0.05f,
             { climbingSpeed },
             { _, value: Double -> climbingSpeed = value },
-            ModSettingsListWidget.getDoubleLabel
+            ModSettingsListWidget.getDoubleLabel,
+            ModSettingsListWidget.getTooltipFromKey("options.modid.spider.climbingSpeed.description"),
         ),
     )
 

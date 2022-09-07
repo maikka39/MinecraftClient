@@ -26,13 +26,14 @@ object Flight : Cheat, Keybinded {
 
     override val options: List<Option> = listOf(
         DoubleOption(
-            "options.modid.flight.flyingSpeed",
+            "options.modid.flight.flyingSpeed.name",
             0.01,
             1.0,
             0.01f,
             { flyingSpeed },
             { _, value: Double -> flyingSpeed = value },
-            ModSettingsListWidget.getDoubleLabel
+            ModSettingsListWidget.getDoubleLabel,
+            ModSettingsListWidget.getTooltipFromKey("options.modid.flight.flyingSpeed.description"),
         ),
     )
 

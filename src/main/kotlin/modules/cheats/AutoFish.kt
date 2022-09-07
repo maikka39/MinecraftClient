@@ -31,7 +31,7 @@ object AutoFish : Cheat, Keybinded {
 
     override val options: List<Option> = listOf(
         DoubleOption(
-            "options.modid.autofish.reelInDelay",
+            "options.modid.autofish.reelInDelay.name",
             0.0,
             50.0,
             1.0f,
@@ -39,25 +39,28 @@ object AutoFish : Cheat, Keybinded {
             { _, value: Double ->
                 reelInDelay = value.toInt()
             },
-            ModSettingsListWidget.getIntLabel
+            ModSettingsListWidget.getIntLabel,
+            ModSettingsListWidget.getTooltipFromKey("options.modid.autofish.reelInDelay.description"),
         ),
         DoubleOption(
-            "options.modid.autofish.castDelay",
+            "options.modid.autofish.castDelay.name",
             0.0,
             50.0,
             1.0f,
             { castDelay.toDouble() },
             { _, value: Double -> castDelay = value.toInt() },
-            ModSettingsListWidget.getIntLabel
+            ModSettingsListWidget.getIntLabel,
+            ModSettingsListWidget.getTooltipFromKey("options.modid.autofish.castDelay.description"),
         ),
         DoubleOption(
-            "options.modid.autofish.range",
+            "options.modid.autofish.range.name",
             1.0,
             20.0,
             0.5f,
             { range },
             { _, value: Double -> range = value },
-            ModSettingsListWidget.getDoubleLabel
+            ModSettingsListWidget.getDoubleLabel,
+            ModSettingsListWidget.getTooltipFromKey("options.modid.autofish.range.description"),
         ),
     )
 

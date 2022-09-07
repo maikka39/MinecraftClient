@@ -5,6 +5,7 @@ import event.EventHandler
 import events.packets.PacketEvent
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.option.DoubleOption
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.option.Option
@@ -17,6 +18,7 @@ import org.apache.commons.lang3.tuple.MutablePair
 import org.lwjgl.glfw.GLFW
 import screens.ModSettingsListWidget
 import utils.Global.Client
+import java.util.function.Function
 import kotlin.math.abs
 
 object LOAntiKick : Cheat, Keybinded {
@@ -28,13 +30,14 @@ object LOAntiKick : Cheat, Keybinded {
 
     override val options: List<Option> = listOf(
         DoubleOption(
-            "options.modid.loantikick.amountOfAxisToLockOn",
+            "options.modid.loantikick.amountOfAxisToLockOn.name",
             0.0,
             2.0,
             1.0f,
             { amountOfAxisToLockOn.toDouble() },
             { _, value: Double -> amountOfAxisToLockOn = value.toInt() },
-            ModSettingsListWidget.getIntLabel
+            ModSettingsListWidget.getIntLabel,
+            ModSettingsListWidget.getTooltipFromKey("options.modid.loantikick.amountOfAxisToLockOn.description"),
         ),
     )
 

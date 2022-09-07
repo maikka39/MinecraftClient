@@ -1,6 +1,7 @@
 package screens
 
 import com.google.common.collect.ImmutableList
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.Element
 import net.minecraft.client.gui.Selectable
 import net.minecraft.client.gui.screen.Screen
@@ -14,17 +15,23 @@ import net.minecraft.client.option.GameOptions
 import net.minecraft.client.option.Option
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.LiteralText
+import net.minecraft.text.OrderedText
 import net.minecraft.text.StringVisitable
 import net.minecraft.text.Text
+import net.minecraft.text.TranslatableText
 import utils.Global.Cheats
 import utils.Global.Client
 
 class ModSettingsListWidget(parent: Screen) : ElementListWidget<ModSettingsListWidget.Entry>(
     Client, parent.width + 80, parent.height, 20, parent.height - 32, 25
 ) {
+    fun getHoveredWidget(mouseX: Double, mouseY: Double): ClickableWidget? {
+        return children().flatMap { it.children() }.find { it.isMouseOver(mouseX, mouseY) } as ClickableWidget?
+    }
+
     init {
         Cheats.forEach { cheat ->
-            addEntry(CategoryEntry(cheat.name))
+            addEntry(CategoryEntry(cheat.name, cheat.description))
 
             val enabledOption = CyclingOption.create("option.modid.enabled",
                 { cheat.enabled },
@@ -38,8 +45,9 @@ class ModSettingsListWidget(parent: Screen) : ElementListWidget<ModSettingsListW
 
     abstract class Entry : ElementListWidget.Entry<Entry?>()
 
-    inner class CategoryEntry(val text: Text) : Entry() {
+    inner class CategoryEntry(val text: Text, val description: Text) : Entry() {
         private val textWidth: Int = client.textRenderer.getWidth(text as StringVisitable)
+        private val descriptionWidth: Int = client.textRenderer.getWidth(description as StringVisitable)
 
         override fun render(
             matrices: MatrixStack,
@@ -53,9 +61,12 @@ class ModSettingsListWidget(parent: Screen) : ElementListWidget<ModSettingsListW
             hovered: Boolean,
             tickDelta: Float
         ) {
-            val renderX = (client.currentScreen!!.width / 2 - textWidth / 2).toFloat()
+            val renderX = (client.currentScreen!!.width / 2).toFloat()
             val renderY = (y + entryHeight - 9 - 1).toFloat()
-            client.textRenderer.draw(matrices, text, renderX, renderY, 16777215)
+            if (!hovered)
+                client.textRenderer.draw(matrices, text, renderX - textWidth / 2, renderY, 0xFFFFFF)
+            else
+                client.textRenderer.draw(matrices, description, renderX - descriptionWidth / 2, renderY, 0xCCCCCC)
         }
 
         override fun changeFocus(lookForwards: Boolean): Boolean {
@@ -129,6 +140,14 @@ class ModSettingsListWidget(parent: Screen) : ElementListWidget<ModSettingsListW
         val getDoubleLabel = { gameOptions: GameOptions?, option: DoubleOption ->
             val ratio = option.getRatio(option.get(gameOptions))
             option.getGenericLabel(LiteralText(String.format("%.2f", option.getValue(ratio))))
+        }
+
+        val getTooltipFromKey: (String) -> (MinecraftClient) -> List<OrderedText> = { key ->
+            { client ->
+                client.textRenderer.wrapLines(
+                    TranslatableText(key), 200
+                )
+            }
         }
     }
 }

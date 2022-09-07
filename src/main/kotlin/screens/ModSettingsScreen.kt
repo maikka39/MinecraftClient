@@ -5,7 +5,9 @@ import net.minecraft.client.gui.screen.ScreenTexts
 import net.minecraft.client.gui.screen.option.GameOptionsScreen
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.option.GameOptions
+import net.minecraft.client.util.OrderableTooltip
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.text.OrderedText
 import net.minecraft.text.TranslatableText
 
 class ModSettingsScreen(parent: Screen?, gameOptions: GameOptions) :
@@ -27,5 +29,13 @@ class ModSettingsScreen(parent: Screen?, gameOptions: GameOptions) :
         this.settingsListWidget.render(matrices, mouseX, mouseY, delta)
         drawCenteredText(matrices, textRenderer, title, width / 2, 8, 16777215)
         super.render(matrices, mouseX, mouseY, delta)
+        val list = getHoveredWidgetTooltip(mouseX, mouseY)
+        renderOrderedTooltip(matrices, list, mouseX, mouseY)
+    }
+
+    private fun getHoveredWidgetTooltip(mouseX: Int, mouseY: Int): List<OrderedText> {
+        val widget = this.settingsListWidget.getHoveredWidget(mouseX.toDouble(), mouseY.toDouble())
+        return if (widget != null && widget is OrderableTooltip) widget.orderedTooltip
+        else listOf()
     }
 }

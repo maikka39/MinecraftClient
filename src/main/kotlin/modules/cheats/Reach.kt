@@ -22,13 +22,14 @@ object Reach : Cheat, Keybinded {
 
     override val options: List<Option> = listOf(
         DoubleOption(
-            "options.modid.reach.distance",
+            "options.modid.reach.distance.name",
             3.0,
             6.0,
             0.5f,
             { reach.toDouble() },
             { _, value: Double -> reach = value.toFloat() },
-            ModSettingsListWidget.getDoubleLabel
+            ModSettingsListWidget.getDoubleLabel,
+            ModSettingsListWidget.getTooltipFromKey("options.modid.reach.distance.description"),
         ),
     )
 

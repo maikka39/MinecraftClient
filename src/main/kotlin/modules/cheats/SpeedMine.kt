@@ -22,13 +22,14 @@ object SpeedMine : Cheat, Keybinded {
 
     override val options: List<Option> = listOf(
         DoubleOption(
-            "options.modid.speedmine.speedModifier",
+            "options.modid.speedmine.speedModifier.name",
             0.6,
             2.0,
             0.05f,
             { speedModifier.toDouble() },
             { _, value: Double -> speedModifier = value.toFloat() },
-            ModSettingsListWidget.getDoubleLabel
+            ModSettingsListWidget.getDoubleLabel,
+            ModSettingsListWidget.getTooltipFromKey("options.modid.speedmine.speedModifier.description"),
         ),
     )
 
