@@ -41,8 +41,8 @@ object LOAntiKick : Cheat, Keybinded {
         if (event.packet !is PlayerMoveC2SPacket) return
         val packet = event.packet
 
-        val dx = (packet.x * 1000).toInt() % 10 * 0.001
-        val dz = (packet.z * 1000).toInt() % 10 * 0.001
+        val dx = (packet.x * 1000).toLong() % 10 * 0.001
+        val dz = (packet.z * 1000).toLong() % 10 * 0.001
 
         packet.x -= dx
         packet.z -= dz
