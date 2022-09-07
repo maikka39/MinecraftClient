@@ -5,6 +5,7 @@
   "options.modid.autofish.castDelay": "Cast delay ticks",
   "options.modid.autofish.range": "Range",
   "options.modid.flight.flyingSpeed": "Speed",
+  "options.modid.loantikick.amountOfAxisToLockOn": "Axis",
   "options.modid.reach.distance": "Distance",
   "options.modid.speedmine.speedModifier": "Speed modifier",
   "options.modid.spider.climbingSpeed": "Climbing speed",

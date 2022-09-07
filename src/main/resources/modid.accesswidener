@@ -16,4 +16,10 @@ mutable field net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket z D
 accessible field net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket z D
 mutable field net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket onGround Z
 accessible field net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket onGround Z
+mutable field net/minecraft/network/packet/c2s/play/VehicleMoveC2SPacket x D
+accessible field net/minecraft/network/packet/c2s/play/VehicleMoveC2SPacket x D
+mutable field net/minecraft/network/packet/c2s/play/VehicleMoveC2SPacket y D
+accessible field net/minecraft/network/packet/c2s/play/VehicleMoveC2SPacket y D
+mutable field net/minecraft/network/packet/c2s/play/VehicleMoveC2SPacket z D
+accessible field net/minecraft/network/packet/c2s/play/VehicleMoveC2SPacket z D
 accessible field net/minecraft/entity/effect/StatusEffectInstance duration I
