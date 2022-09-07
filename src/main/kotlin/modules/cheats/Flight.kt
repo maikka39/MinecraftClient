@@ -74,7 +74,10 @@ object Flight : Cheat, Keybinded {
 
     @EventHandler(TickEvent.Pre::class)
     private fun onTick() {
-        Client.player?.let { it.abilities.flySpeed = flyingSpeed.toFloat() }
+        Client.player?.let {
+            it.abilities.allowFlying = true
+            it.abilities.flySpeed = flyingSpeed.toFloat()
+        }
     }
 
     private var lastModifiedTime: Long = 0
