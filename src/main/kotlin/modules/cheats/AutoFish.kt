@@ -5,15 +5,20 @@ import event.EventHandler
 import events.world.SoundEvent
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
+import net.minecraft.client.option.DoubleOption
+import net.minecraft.client.option.GameOptions
 import net.minecraft.client.option.KeyBinding
+import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.item.FishingRodItem
 import net.minecraft.sound.SoundEvents
+import net.minecraft.text.LiteralText
 import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import net.minecraft.util.Hand
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
+import screens.ModSettingsListWidget
 import utils.DelayedAction
 import utils.Global.Client
 
@@ -23,6 +28,38 @@ object AutoFish : Cheat, Keybinded {
             field = value
             if (value) onEnable() else onDisable()
         }
+
+    override val options: List<Option> = listOf(
+        DoubleOption(
+            "options.modid.autofish.reelInDelay",
+            0.0,
+            50.0,
+            1.0f,
+            { reelInDelay.toDouble() },
+            { _, value: Double ->
+                reelInDelay = value.toInt()
+            },
+            ModSettingsListWidget.getIntLabel
+        ),
+        DoubleOption(
+            "options.modid.autofish.castDelay",
+            0.0,
+            50.0,
+            1.0f,
+            { castDelay.toDouble() },
+            { _, value: Double -> castDelay = value.toInt() },
+            ModSettingsListWidget.getIntLabel
+        ),
+        DoubleOption(
+            "options.modid.autofish.range",
+            1.0,
+            20.0,
+            0.5f,
+            { range },
+            { _, value: Double -> range = value },
+            ModSettingsListWidget.getDoubleLabel
+        ),
+    )
 
     override val name = TranslatableText("cheat.modid.autofish.name")
     override val description = TranslatableText("cheat.modid.autofish.description")
@@ -47,8 +84,7 @@ object AutoFish : Cheat, Keybinded {
 
         val soundInstance = event.soundInstance
 
-        if (soundInstance.id != SoundEvents.ENTITY_FISHING_BOBBER_SPLASH.id)
-            return
+        if (soundInstance.id != SoundEvents.ENTITY_FISHING_BOBBER_SPLASH.id) return
 
         Client.player?.fishHook?.let { fishHook ->
             val fishHookLocation = Vec3d(fishHook.x, fishHook.y, fishHook.z)
@@ -63,8 +99,7 @@ object AutoFish : Cheat, Keybinded {
 
     private fun useFishingRod() {
         Client.player?.let {
-            if (it.mainHandStack.item !is FishingRodItem)
-                return
+            if (it.mainHandStack.item !is FishingRodItem) return
 
             Client.interactionManager!!.interactItem(it, Client.world!!, Hand.MAIN_HAND)
         }

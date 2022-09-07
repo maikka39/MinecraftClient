@@ -3,11 +3,14 @@ package modules.cheats
 import Logger
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
+import net.minecraft.client.option.DoubleOption
 import net.minecraft.client.option.KeyBinding
+import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import org.lwjgl.glfw.GLFW
+import screens.ModSettingsListWidget
 import utils.Global.Client
 
 object SpeedMine : Cheat, Keybinded {
@@ -16,6 +19,18 @@ object SpeedMine : Cheat, Keybinded {
             field = value
             if (value) onEnable() else onDisable()
         }
+
+    override val options: List<Option> = listOf(
+        DoubleOption(
+            "options.modid.speedmine.speedModifier",
+            0.6,
+            2.0,
+            0.05f,
+            { speedModifier.toDouble() },
+            { _, value: Double -> speedModifier = value.toFloat() },
+            ModSettingsListWidget.getDoubleLabel
+        ),
+    )
 
     override val name = TranslatableText("cheat.modid.speedmine.name")
     override val description = TranslatableText("cheat.modid.speedmine.description")

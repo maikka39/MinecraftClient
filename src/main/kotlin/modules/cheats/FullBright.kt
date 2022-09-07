@@ -6,6 +6,7 @@ import events.world.TickEvent
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
+import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
@@ -20,6 +21,8 @@ object FullBright : Cheat, Keybinded {
             field = value
             if (value) onEnable() else onDisable()
         }
+
+    override val options: List<Option> = listOf()
 
     override val name = TranslatableText("cheat.modid.fullbright.name")
     override val description = TranslatableText("cheat.modid.fullbright.description")
@@ -38,7 +41,7 @@ object FullBright : Cheat, Keybinded {
         if (!enabled) return
 
         Client.player?.let {
-            if (!it.hasStatusEffect(StatusEffects.NIGHT_VISION)) {
+            if (!it.hasStatusEffect(StatusEffects.NIGHT_VISION))
                 it.addStatusEffect(
                     StatusEffectInstance(
                         StatusEffects.NIGHT_VISION,
@@ -49,8 +52,6 @@ object FullBright : Cheat, Keybinded {
                         false
                     )
                 )
-                println("Added effect")
-            }
 
             val effect = it.getStatusEffect(StatusEffects.NIGHT_VISION)!!
 

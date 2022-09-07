@@ -5,6 +5,7 @@ import events.world.TickEvent
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
+import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.entity.mob.EndermanEntity
 import net.minecraft.text.TranslatableText
@@ -14,6 +15,8 @@ import utils.Global.Client
 
 object AfkEndermanFarmer : Cheat, Keybinded {
     override var enabled = false
+
+    override val options: List<Option> = listOf()
 
     override val name = TranslatableText("cheat.modid.afkendermanfarmer.name")
     override val description = TranslatableText("cheat.modid.afkendermanfarmer.description")

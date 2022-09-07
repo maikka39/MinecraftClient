@@ -6,11 +6,11 @@ import events.packets.PacketEvent
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
+import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
 import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
-import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
@@ -20,6 +20,8 @@ object NoFall : Cheat, Keybinded {
             field = value
             if (value) onEnable() else onDisable()
         }
+
+    override val options: List<Option> = listOf()
 
     override val name = TranslatableText("cheat.modid.nofall.name")
     override val description = TranslatableText("cheat.modid.nofall.description")

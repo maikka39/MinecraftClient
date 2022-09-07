@@ -3,14 +3,18 @@ package modules.cheats
 import Logger
 import event.EventHandler
 import events.packets.PacketEvent
+import events.world.TickEvent
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
+import net.minecraft.client.option.DoubleOption
 import net.minecraft.client.option.KeyBinding
+import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
 import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import org.lwjgl.glfw.GLFW
+import screens.ModSettingsListWidget
 import utils.Global.Client
 
 object Flight : Cheat, Keybinded {
@@ -20,6 +24,18 @@ object Flight : Cheat, Keybinded {
             if (value) onEnable() else onDisable()
         }
 
+    override val options: List<Option> = listOf(
+        DoubleOption(
+            "options.modid.flight.speed",
+            0.01,
+            1.0,
+            0.01f,
+            { flyingSpeed },
+            { _, value: Double -> flyingSpeed = value },
+            ModSettingsListWidget.getDoubleLabel
+        ),
+    )
+
     override val name = TranslatableText("cheat.modid.flight.name")
     override val description = TranslatableText("cheat.modid.flight.description")
 
@@ -28,6 +44,8 @@ object Flight : Cheat, Keybinded {
             "key.modid.cheat.flight", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "category.modid.cheat"
         )
     )!!
+
+    var flyingSpeed = 0.1
 
     override fun onKeybindingPressed() {
         enabled = !enabled
@@ -52,6 +70,11 @@ object Flight : Cheat, Keybinded {
             it.abilities.allowFlying = false
             it.abilities.flying = false
         }
+    }
+
+    @EventHandler(TickEvent.Pre::class)
+    private fun onTick() {
+        Client.player?.let { it.abilities.flySpeed = flyingSpeed.toFloat() }
     }
 
     private var lastModifiedTime: Long = 0

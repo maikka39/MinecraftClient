@@ -6,6 +6,7 @@ import event.EventHandler
 import events.world.TickEvent
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
+import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket
 import net.minecraft.text.Text
@@ -20,6 +21,8 @@ object FastBreak : Cheat, Keybinded {
             field = value
             if (value) onEnable() else onDisable()
         }
+
+    override val options: List<Option> = listOf()
 
     override val name = TranslatableText("cheat.modid.fastbreak.name")
     override val description = TranslatableText("cheat.modid.fastbreak.description")

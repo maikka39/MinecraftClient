@@ -6,6 +6,7 @@ import events.packets.PacketEvent
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
+import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
 import net.minecraft.text.Text
@@ -19,6 +20,8 @@ object LOAntiKick : Cheat, Keybinded {
             field = value
             if (value) onEnable() else onDisable()
         }
+
+    override val options: List<Option> = listOf()
 
     override val name = TranslatableText("cheat.modid.loantikick.name")
     override val description = TranslatableText("cheat.modid.loantikick.description")
@@ -38,11 +41,11 @@ object LOAntiKick : Cheat, Keybinded {
         if (event.packet !is PlayerMoveC2SPacket) return
         val packet = event.packet
 
-        val x = (packet.x * 1000).toInt() % 10
-        val z = (packet.z * 1000).toInt() % 10
+        val dx = (packet.x * 1000).toInt() % 10 * 0.001
+        val dz = (packet.z * 1000).toInt() % 10 * 0.001
 
-        packet.x -= x * 0.001
-        packet.z -= z * 0.001
+        packet.x -= dx
+        packet.z -= dz
     }
 
     private fun onEnable() {
