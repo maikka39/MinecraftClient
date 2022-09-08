@@ -146,7 +146,7 @@ object LOAntiKick : Cheat, Keybinded {
     }
 
     private fun fixCoordinate(x: Double, z: Double): Pair<Double, Double> {
-        if (!isCoordinateAllowed(x, z)) return Pair(x, z)
+        if (isCoordinateAllowed(x, z)) return Pair(x, z)
 
         val coords = MutablePair(
             if (x - lastX < 0) fixDouble(x, Math::ceil) else fixDouble(x, Math::floor),
