@@ -11,15 +11,20 @@ object Global {
     val ClientModules: List<ClientModule> = listOf(
         AfkEndermanFarmer,
         AutoFish,
+        AutoHighwayBuilder,
+        Blink,
         FastBreak,
         Flight,
         FullBright,
+        WorldGuardBypass,
         LOAntiKick,
         NoFall,
+        NoRotate,
         Reach,
         Speed,
         SpeedMine,
         Spider,
+        Tp,
         CheatMenuOpener,
     )
 

@@ -15,7 +15,16 @@ object EventManager {
         eventListeners.add(listener as EventListener<Event>)
     }
 
-    fun notify(event: Event) {
+    fun notify(event: Event): Event {
         listeners[event::class]?.forEach { it.handle(event) }
+        return event
+    }
+
+    fun notify(event: CancellableEvent): CancellableEvent {
+        listeners[event::class]?.forEach {
+            it.handle(event)
+            if (event.cancelled) return event
+        }
+        return event
     }
 }
