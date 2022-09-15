@@ -160,5 +160,13 @@ object WorldGuardBypass : Cheat("WorldGuardBypass"), Keybinded {
             event.cancel()
             return
         }
+
+        val packet = event.packet
+
+        val x = (packet.x * 1000).toInt() % 10
+        val z = (packet.z * 1000).toInt() % 10
+
+        packet.x -= x * 0.001
+        packet.z -= z * 0.001
     }
 }
