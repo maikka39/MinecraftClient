@@ -83,5 +83,7 @@
   "cheat.modid.norotate.name": "NoRotate",
   "cheat.modid.norotate.description": "Ignores the yaw and pitch values in incoming player position packets.",
   "cheat.modid.tp.name": "Teleport",
-  "cheat.modid.tp.description": "Teleports you relative to your current position. Keep in mind you can only move 10 blocks per tick."
+  "cheat.modid.tp.description": "Teleports you relative to your current position. Keep in mind you can only move 10 blocks per tick.",
+  "other.modid.enabledcheat": "Enabled %s!",
+  "other.modid.disabledcheat": "Disabled %s!"
 }

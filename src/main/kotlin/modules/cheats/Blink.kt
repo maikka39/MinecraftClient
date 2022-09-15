@@ -1,28 +1,17 @@
 package modules.cheats
 
-import Logger
 import event.EventHandler
 import events.packets.PacketEvent
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
-import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
-object Blink : Cheat, Keybinded {
-    override var enabled = false
-        set(value) {
-            field = value
-            if (value) onEnable() else onDisable()
-        }
-
-    override val options: List<Option> = listOf()
-
+object Blink : Cheat("Blink"), Keybinded {
     override val name = TranslatableText("cheat.modid.blink.name")
     override val description = TranslatableText("cheat.modid.blink.description")
 
@@ -59,18 +48,9 @@ object Blink : Cheat, Keybinded {
         packets.add(packet)
     }
 
-    private fun onEnable() {
-        Logger.info("Enabling blink...")
-
-        Client.player?.sendMessage(Text.of("Enabling blink!"), false)
-    }
-
-    private fun onDisable() {
-        Logger.info("Disabling blink...")
-
+    override fun onDisable() {
+        super.onDisable()
         packets.forEach(Client.player!!.networkHandler::sendPacket)
         packets.clear()
-
-        Client.player?.sendMessage(Text.of("Disabling blink!"), false)
     }
 }

@@ -1,5 +1,9 @@
 accessWidener	v1 named
 
+# Classes
+accessible class net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractType
+accessible class Lnet/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractTypeHandler
+
 # Methods
 accessible method net/minecraft/client/network/ClientPlayerInteractionManager sendPlayerAction (Lnet/minecraft/network/packet/c2s/play/PlayerActionC2SPacket$Action;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;)V
 accessible method net/minecraft/client/option/Option getGenericLabel (I)Lnet/minecraft/text/Text;
@@ -32,3 +36,5 @@ mutable field net/minecraft/network/packet/s2c/play/PlayerPositionLookS2CPacket 
 accessible field net/minecraft/network/packet/s2c/play/PlayerPositionLookS2CPacket yaw F
 mutable field net/minecraft/network/packet/s2c/play/PlayerPositionLookS2CPacket pitch F
 accessible field net/minecraft/network/packet/s2c/play/PlayerPositionLookS2CPacket pitch F
+accessible field net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket type Lnet/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractTypeHandler;
+#accessible field net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractType ATTACK Lnet/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractType;

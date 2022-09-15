@@ -1,32 +1,25 @@
 package modules.cheats
 
-import Logger
 import event.EventHandler
 import events.packets.PacketEvent
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.option.DoubleOption
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
 import net.minecraft.network.packet.c2s.play.VehicleMoveC2SPacket
-import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import org.apache.commons.lang3.tuple.MutablePair
 import org.lwjgl.glfw.GLFW
 import screens.ModSettingsListWidget
 import utils.Global.Client
-import java.util.function.Function
 import kotlin.math.abs
 
-object LOAntiKick : Cheat, Keybinded {
-    override var enabled = true
-        set(value) {
-            field = value
-            if (value) onEnable() else onDisable()
-        }
+object LOAntiKick : Cheat("LOAntiKick"), Keybinded {
+    override val name = TranslatableText("cheat.modid.loantikick.name")
+    override val description = TranslatableText("cheat.modid.loantikick.description")
 
     override val options: List<Option> = listOf(
         DoubleOption(
@@ -41,8 +34,6 @@ object LOAntiKick : Cheat, Keybinded {
         ),
     )
 
-    override val name = TranslatableText("cheat.modid.loantikick.name")
-    override val description = TranslatableText("cheat.modid.loantikick.description")
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(
             "key.modid.cheat.loantikick", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.modid.cheat"
@@ -63,18 +54,6 @@ object LOAntiKick : Cheat, Keybinded {
             modify(event.packet)
         else if (event.packet is VehicleMoveC2SPacket)
             modify(event.packet)
-    }
-
-    private fun onEnable() {
-        Logger.info("Enabling loantikick...")
-
-        Client.player?.sendMessage(Text.of("Enabling loantikick!"), false)
-    }
-
-    private fun onDisable() {
-        Logger.info("Disabling loantikick...")
-
-        Client.player?.sendMessage(Text.of("Disabling loantikick!"), false)
     }
 
     private var lastX = 0.0

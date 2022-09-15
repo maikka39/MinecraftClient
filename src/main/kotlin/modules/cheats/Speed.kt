@@ -1,32 +1,19 @@
 package modules.cheats
 
-import Logger
 import event.EventHandler
 import events.world.TickEvent
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
-import net.minecraft.client.option.DoubleOption
 import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
-import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
-import screens.ModSettingsListWidget
 import utils.Global.Client
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-object Speed : Cheat, Keybinded {
-    override var enabled = false
-        set(value) {
-            field = value
-            if (value) onEnable() else onDisable()
-        }
-
-    override val options: List<Option> = listOf()
-
+object Speed : Cheat("Speed"), Keybinded {
     override val name = TranslatableText("cheat.modid.speed.name")
     override val description = TranslatableText("cheat.modid.speed.description")
 
@@ -70,17 +57,5 @@ object Speed : Cheat, Keybinded {
                 v.z / currentSpeed * maxSpeed
             )
         }
-    }
-
-    private fun onEnable() {
-        Logger.info("Enabling speed...")
-
-        Client.player?.sendMessage(Text.of("Enabling speed!"), false)
-    }
-
-    private fun onDisable() {
-        Logger.info("Disabling speed...")
-
-        Client.player?.sendMessage(Text.of("Disabling speed!"), false)
     }
 }

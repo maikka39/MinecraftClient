@@ -1,6 +1,5 @@
 package modules.cheats
 
-import Logger
 import event.EventHandler
 import events.packets.PacketEvent
 import events.world.TickEvent
@@ -9,12 +8,10 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.network.ClientPlayNetworkHandler
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.client.world.ClientWorld
 import net.minecraft.network.Packet
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
-import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
@@ -22,15 +19,7 @@ import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 import kotlin.math.abs
 
-object WorldGuardBypass : Cheat, Keybinded {
-    override var enabled = false
-        set(value) {
-            field = value
-            if (value) onEnable() else onDisable()
-        }
-
-    override val options: List<Option> = listOf()
-
+object WorldGuardBypass : Cheat("WorldGuardBypass"), Keybinded {
     override val name = TranslatableText("cheat.modid.worldguardbypass.name")
     override val description = TranslatableText("cheat.modid.worldguardbypass.description")
 
@@ -171,17 +160,5 @@ object WorldGuardBypass : Cheat, Keybinded {
             event.cancel()
             return
         }
-    }
-
-    private fun onEnable() {
-        Logger.info("Enabling worldguardbypass...")
-
-        Client.player?.sendMessage(Text.of("Enabling worldguardbypass!"), false)
-    }
-
-    private fun onDisable() {
-        Logger.info("Disabling worldguardbypass...")
-
-        Client.player?.sendMessage(Text.of("Disabling worldguardbypass!"), false)
     }
 }

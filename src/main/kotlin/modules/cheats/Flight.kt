@@ -1,6 +1,5 @@
 package modules.cheats
 
-import Logger
 import event.EventHandler
 import events.packets.PacketEvent
 import events.world.TickEvent
@@ -11,13 +10,12 @@ import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
-import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import org.lwjgl.glfw.GLFW
 import screens.ModSettingsListWidget
 import utils.Global.Client
 
-object Flight : Cheat, Keybinded {
+object Flight : Cheat("Flight"), Keybinded {
     override var enabled = false
         set(value) {
             field = value
@@ -46,28 +44,22 @@ object Flight : Cheat, Keybinded {
         )
     )!!
 
-    var flyingSpeed = 0.1
+    private var flyingSpeed = 0.1
 
     override fun onKeybindingPressed() {
         enabled = !enabled
     }
 
-    private fun onEnable() {
-        Logger.info("Enabling flying mode...")
-
+    override fun onEnable() {
+        super.onEnable()
         Client.player?.let {
-            it.sendMessage(Text.of("Enabling flying!"), false)
-
             it.abilities.allowFlying = true
         }
     }
 
-    private fun onDisable() {
-        Logger.info("Disabling flying mode...")
-
+    override fun onDisable() {
+        super.onDisable()
         Client.player?.let {
-            it.sendMessage(Text.of("Disabling flying!"), false)
-
             it.abilities.allowFlying = false
             it.abilities.flying = false
         }

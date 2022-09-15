@@ -1,6 +1,5 @@
 package modules.cheats
 
-import Logger
 import event.EventHandler
 import events.world.TickEvent
 import modules.Keybinded
@@ -10,12 +9,11 @@ import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
-object FullBright : Cheat, Keybinded {
+object FullBright : Cheat("FullBright"), Keybinded {
     override var enabled = false
         set(value) {
             field = value
@@ -60,21 +58,13 @@ object FullBright : Cheat, Keybinded {
         }
     }
 
-    private fun onEnable() {
-        Logger.info("Enabling fullbright...")
-
-        Client.player?.sendMessage(Text.of("Enabling fullbright!"), false)
-    }
-
-    private fun onDisable() {
-        Logger.info("Disabling fullbright...")
+    override fun onDisable() {
+        super.onDisable()
 
         Client.player?.let {
             val effect = it.getStatusEffect(StatusEffects.NIGHT_VISION)
             if (effect != null && effect.duration <= 10)
                 it.removeStatusEffect(StatusEffects.NIGHT_VISION)
-
-            it.sendMessage(Text.of("Disabling fullbright!"), false)
         }
     }
 }
