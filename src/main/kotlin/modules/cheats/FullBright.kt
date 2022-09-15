@@ -5,7 +5,6 @@ import events.world.TickEvent
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
@@ -14,16 +13,9 @@ import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
 object FullBright : Cheat("FullBright"), Keybinded {
-    override var enabled = false
-        set(value) {
-            field = value
-            if (value) onEnable() else onDisable()
-        }
-
-    override val options: List<Option> = listOf()
-
     override val name = TranslatableText("cheat.modid.fullbright.name")
     override val description = TranslatableText("cheat.modid.fullbright.description")
+
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(
             "key.modid.cheat.fullbright", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B, "category.modid.cheat"

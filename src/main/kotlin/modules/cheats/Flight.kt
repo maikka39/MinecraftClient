@@ -16,11 +16,8 @@ import screens.ModSettingsListWidget
 import utils.Global.Client
 
 object Flight : Cheat("Flight"), Keybinded {
-    override var enabled = false
-        set(value) {
-            field = value
-            if (value) onEnable() else onDisable()
-        }
+    override val name = TranslatableText("cheat.modid.flight.name")
+    override val description = TranslatableText("cheat.modid.flight.description")
 
     override val options: List<Option> = listOf(
         DoubleOption(
@@ -34,9 +31,6 @@ object Flight : Cheat("Flight"), Keybinded {
             ModSettingsListWidget.getTooltipFromKey("options.modid.flight.flyingSpeed.description"),
         ),
     )
-
-    override val name = TranslatableText("cheat.modid.flight.name")
-    override val description = TranslatableText("cheat.modid.flight.description")
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(
