@@ -95,8 +95,8 @@ object WorldGuardBypass : Cheat("WorldGuardBypass"), Keybinded {
                             player.x,
                             player.y - 0.03130,
                             player.z,
-                            0f,
-                            0f,
+                            player.yaw,
+                            player.pitch,
                             player.isOnGround
                         )
                     )
@@ -129,8 +129,8 @@ object WorldGuardBypass : Cheat("WorldGuardBypass"), Keybinded {
                         newPos.x,
                         newPos.y,
                         newPos.z,
-                        0f,
-                        0f,
+                        player.yaw,
+                        player.pitch,
                         player.isOnGround
                     )
                 )
