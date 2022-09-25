@@ -2,6 +2,7 @@ package modules.cheats
 
 import event.EventHandler
 import events.packets.PacketEvent
+import mixinterfaces.IPlayerMoveC2SPacket
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
@@ -17,7 +18,7 @@ object NoFall : Cheat("NoFall"), Keybinded {
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(
-            "key.modid.cheat.nofall", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "category.modid.cheat"
+            "key.modid.cheat.nofall", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.modid.cheat"
         )
     )!!
 
@@ -30,10 +31,13 @@ object NoFall : Cheat("NoFall"), Keybinded {
         if (!enabled) return
         if (event.packet !is PlayerMoveC2SPacket) return
         val packet = event.packet
+
+        packet as IPlayerMoveC2SPacket
+        if (packet.isMine) return
+
         val player = Client.player!!
 
-        if (player.velocity.y >= -0.08)
-            return
+        if (player.velocity.y >= -0.08) return
 
         packet.onGround = true
     }

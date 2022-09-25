@@ -1,9 +1,12 @@
 package mixins
 
 import event.EventManager
+import events.client.RenderEvent
 import events.world.TickEvent
+import events.world.WorldEvent
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.WindowEventHandler
+import net.minecraft.client.world.ClientWorld
 import net.minecraft.util.thread.ReentrantThreadExecutor
 import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.injection.At
@@ -21,5 +24,15 @@ abstract class MinecraftClientMixin(string: String?) : ReentrantThreadExecutor<R
     private fun onTick(info: CallbackInfo) {
         EventManager.notify(TickEvent.Post())
 
+    }
+
+    @Inject(at = [At("HEAD")], method = ["render"])
+    private fun onRender(tick: Boolean, info: CallbackInfo) {
+        EventManager.notify(RenderEvent())
+    }
+
+    @Inject(at = [At("HEAD")], method = ["joinWorld"])
+    private fun onJoinWorld(world: ClientWorld, info: CallbackInfo) {
+        EventManager.notify(WorldEvent.Join(world))
     }
 }

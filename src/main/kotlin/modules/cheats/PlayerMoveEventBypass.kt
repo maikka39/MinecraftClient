@@ -13,20 +13,19 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
 import net.minecraft.network.packet.c2s.play.TeleportConfirmC2SPacket
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket
 import net.minecraft.text.TranslatableText
-import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 import utils.NetworkHandler
 import utils.PositionDirection
 
-object WorldGuardBypass : Cheat("WorldGuardBypass"), Keybinded {
-    override val name = TranslatableText("cheat.modid.worldguardbypass.name")
-    override val description = TranslatableText("cheat.modid.worldguardbypass.description")
+object PlayerMoveEventBypass : Cheat("PlayerMoveEventBypass"), Keybinded {
+    override val name = TranslatableText("cheat.modid.playermoveeventbypass.name")
+    override val description = TranslatableText("cheat.modid.playermoveeventbypass.description")
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(
-            "key.modid.cheat.worldguardbypass", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_K, "category.modid.cheat"
+            "key.modid.cheat.playermoveeventbypass", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.modid.cheat"
         )
     )!!
 
@@ -60,6 +59,9 @@ object WorldGuardBypass : Cheat("WorldGuardBypass"), Keybinded {
         if (event.packet !is PlayerMoveC2SPacket) return
         val packet = event.packet
 
+        packet.pitch = 0f
+        packet.yaw = 0f
+
         packet as IPlayerMoveC2SPacket
         if (packet.isMine) return
 
@@ -75,9 +77,7 @@ object WorldGuardBypass : Cheat("WorldGuardBypass"), Keybinded {
             packet.getPitch(player.pitch)
         )
 
-        if (previousPosDir.pos.squaredDistanceTo(packetPos.pos) > 3 ||
-            previousPosDir.blockPos == packetPos.blockPos
-        ) {
+        if (previousPosDir.pos.x == Double.MAX_VALUE) {
             previousPosDir = packetPos
             return
         }
@@ -91,19 +91,7 @@ object WorldGuardBypass : Cheat("WorldGuardBypass"), Keybinded {
 
         val increment = posDiff.multiply(1.0 / count.coerceAtLeast(2))
 
-        val lastPosOnCurrentBlock = (0..count).findLast { i ->
-            BlockPos(previousPosDir.pos.add(increment.multiply(i.toDouble()))) == previousPosDir.blockPos
-        }!!
-
-        sendPos(
-            player,
-            previousPosDir.pos.add(increment.multiply(lastPosOnCurrentBlock.toDouble())),
-            previousPosDir.yaw,
-            previousPosDir.pitch,
-        )
-        resetPosition(player)
-
-        for (i in (lastPosOnCurrentBlock + 1)..count) {
+        for (i in 1..count) {
             val newPos = previousPosDir.pos.add(increment.multiply(i.toDouble()))
 
             sendPos(
@@ -113,11 +101,11 @@ object WorldGuardBypass : Cheat("WorldGuardBypass"), Keybinded {
                 previousPosDir.pitch,
             )
             resetPosition(player)
-
-            if (BlockPos(newPos) == packetPos.blockPos) break
         }
 
         sendPos(player, packetPos.pos, packetPos.yaw, packetPos.pitch)
+        resetPosition(player)
+
         event.cancel()
         previousPosDir = packetPos
     }

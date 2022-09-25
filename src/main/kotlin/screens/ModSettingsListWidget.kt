@@ -33,7 +33,7 @@ class ModSettingsListWidget(parent: Screen) : ElementListWidget<ModSettingsListW
         Cheats.forEach { cheat ->
             addEntry(CategoryEntry(cheat.name, cheat.description))
 
-            val enabledOption = CyclingOption.create("option.modid.enabled",
+            val enabledOption = CyclingOption.create("other.modid.enabled",
                 { cheat.enabled },
                 { _, _, value: Boolean -> cheat.enabled = value })
 

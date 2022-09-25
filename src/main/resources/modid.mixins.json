@@ -13,6 +13,7 @@
     "ModSettingsInjectorMixin",
     "MultiplayerScreenMixin",
     "PlayerEntityMixin",
+    "PlayerMoveC2SPacketMixin",
     "SoundSystemMixin"
   ],
   "injectors": {
