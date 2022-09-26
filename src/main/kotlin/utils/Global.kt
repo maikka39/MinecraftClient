@@ -19,6 +19,7 @@ object Global {
         FullBright,
         WorldGuardBypass,
         LOAntiKick,
+        LOWhitelistJoiner,
         NoFall,
         NoRotate,
         PlayerMoveEventBypass,
