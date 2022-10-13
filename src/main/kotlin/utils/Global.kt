@@ -17,9 +17,7 @@ object Global {
         FastBreak,
         Flight,
         FullBright,
-        WorldGuardBypass,
         LOAntiKick,
-        LOWhitelistJoiner,
         NoFall,
         NoRotate,
         PlayerMoveEventBypass,
@@ -29,6 +27,7 @@ object Global {
         SpeedMine,
         Spider,
         Tp,
+        WorldGuardBypass,
         CheatMenuOpener,
     )
 

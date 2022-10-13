@@ -72,8 +72,6 @@
   "cheat.modid.fullbright.description": "Allows you to always see like it's daytime.",
   "cheat.modid.loantikick.name": "LiveOverflow Anti Kick",
   "cheat.modid.loantikick.description": "Prevents you from being kicked from LiveOverflow's server.",
-  "cheat.modid.lowhitelistjoiner.name": "LiveOverflow Player Whitelist Joiner",
-  "cheat.modid.lowhitelistjoiner.description": "Automatically removes a N00bbot from the server so you can join.",
   "cheat.modid.nofall.name": "NoFall",
   "cheat.modid.nofall.description": "Prevents you from receiving fall damage.",
   "cheat.modid.norotate.name": "NoRotate",
