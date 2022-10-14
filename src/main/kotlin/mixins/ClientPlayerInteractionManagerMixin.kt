@@ -6,7 +6,6 @@ import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.injection.At
 import org.spongepowered.asm.mixin.injection.Inject
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable
-import utils.Global
 
 @Mixin(ClientPlayerInteractionManager::class)
 abstract class ClientPlayerInteractionManagerMixin {
@@ -14,6 +13,6 @@ abstract class ClientPlayerInteractionManagerMixin {
     private fun getReachDistance(info: CallbackInfoReturnable<Float>) {
         if (!Reach.enabled) return
 
-        info.returnValue = Reach.reach
+        info.returnValue = Reach.reach.value.toFloat()
     }
 }

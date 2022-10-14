@@ -3,18 +3,20 @@ package modules.cheats
 import event.EventHandler
 import events.packets.PacketEvent
 import mixinterfaces.IPlayerMoveC2SPacket
+import modules.ClientModule
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
-object NoFall : Cheat("NoFall"), Keybinded {
-    override val name = TranslatableText("cheat.modid.nofall.name")
-    override val description = TranslatableText("cheat.modid.nofall.description")
+@ClientModule
+object NoFall : Cheat(), Keybinded {
+    override val name = Text.translatable("cheat.modid.nofall.name")
+    override val description = Text.translatable("cheat.modid.nofall.description")
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(

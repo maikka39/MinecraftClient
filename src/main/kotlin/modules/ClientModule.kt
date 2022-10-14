@@ -1,3 +1,4 @@
 package modules
 
-interface ClientModule
+@Target(AnnotationTarget.CLASS)
+internal annotation class ClientModule

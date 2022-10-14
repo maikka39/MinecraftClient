@@ -3,33 +3,31 @@ package modules.cheats
 import event.EventHandler
 import events.packets.PacketEvent
 import events.world.TickEvent
+import modules.ClientModule
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
-import net.minecraft.client.option.DoubleOption
 import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
-import screens.ModSettingsListWidget
 import utils.Global.Client
+import utils.options.Option
+import utils.options.OptionCallbacks.Companion.ValidatingDoubleSliderCallbacks
+import utils.options.TooltipFactory
+import utils.options.ValueTextFactory
 
-object Flight : Cheat("Flight"), Keybinded {
-    override val name = TranslatableText("cheat.modid.flight.name")
-    override val description = TranslatableText("cheat.modid.flight.description")
+@ClientModule
+object Flight : Cheat(), Keybinded {
+    override val name = Text.translatable("cheat.modid.flight.name")
+    override val description = Text.translatable("cheat.modid.flight.description")
 
-    override val options: List<Option> = listOf(
-        DoubleOption(
-            "options.modid.flight.flyingSpeed.name",
-            0.01,
-            1.0,
-            0.01f,
-            { flyingSpeed },
-            { _, value: Double -> flyingSpeed = value },
-            ModSettingsListWidget.getDoubleLabel,
-            ModSettingsListWidget.getTooltipFromKey("options.modid.flight.flyingSpeed.description"),
-        ),
+    private val flyingSpeed = Option<Double>(
+        "options.modid.flight.flyingSpeed.name",
+        TooltipFactory.fromKey("options.modid.flight.flyingSpeed.description"),
+        ValueTextFactory.roundedDouble(2),
+        ValidatingDoubleSliderCallbacks(0.01, 1.0, 0.01),
+        0.1,
     )
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
@@ -37,8 +35,6 @@ object Flight : Cheat("Flight"), Keybinded {
             "key.modid.cheat.flight", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "category.modid.cheat"
         )
     )!!
-
-    private var flyingSpeed = 0.1
 
     override fun onKeybindingPressed() {
         enabled = !enabled
@@ -65,7 +61,7 @@ object Flight : Cheat("Flight"), Keybinded {
 
         Client.player?.let {
             it.abilities.allowFlying = true
-            it.abilities.flySpeed = flyingSpeed.toFloat()
+            it.abilities.flySpeed = flyingSpeed.value.toFloat()
         }
     }
 

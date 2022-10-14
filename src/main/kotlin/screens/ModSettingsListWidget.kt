@@ -1,7 +1,6 @@
 package screens
 
 import com.google.common.collect.ImmutableList
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.Element
 import net.minecraft.client.gui.Selectable
 import net.minecraft.client.gui.screen.Screen
@@ -9,18 +8,12 @@ import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder
 import net.minecraft.client.gui.screen.narration.NarrationPart
 import net.minecraft.client.gui.widget.ClickableWidget
 import net.minecraft.client.gui.widget.ElementListWidget
-import net.minecraft.client.option.CyclingOption
-import net.minecraft.client.option.DoubleOption
-import net.minecraft.client.option.GameOptions
-import net.minecraft.client.option.Option
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.text.LiteralText
-import net.minecraft.text.OrderedText
 import net.minecraft.text.StringVisitable
 import net.minecraft.text.Text
-import net.minecraft.text.TranslatableText
 import utils.Global.Cheats
 import utils.Global.Client
+import utils.options.BaseOption
 
 class ModSettingsListWidget(parent: Screen) : ElementListWidget<ModSettingsListWidget.Entry>(
     Client, parent.width + 80, parent.height, 20, parent.height - 32, 25
@@ -33,11 +26,7 @@ class ModSettingsListWidget(parent: Screen) : ElementListWidget<ModSettingsListW
         Cheats.forEach { cheat ->
             addEntry(CategoryEntry(cheat.name, cheat.description))
 
-            val enabledOption = CyclingOption.create("other.modid.enabled",
-                { cheat.enabled },
-                { _, _, value: Boolean -> cheat.enabled = value })
-
-            (listOf(enabledOption) + cheat.options).chunked(2).forEach {
+            cheat.options.chunked(2).forEach {
                 addEntry(OptionEntry(it[0], it.getOrNull(1)))
             }
         }
@@ -90,12 +79,12 @@ class ModSettingsListWidget(parent: Screen) : ElementListWidget<ModSettingsListW
         }
     }
 
-    inner class OptionEntry(firstOption: Option, secondOption: Option?) : Entry() {
+    inner class OptionEntry(firstOption: BaseOption, secondOption: BaseOption?) : Entry() {
         private val buttons: Pair<ClickableWidget, ClickableWidget?>
 
         init {
-            val button1 = firstOption.createButton(Client.options, client.currentScreen!!.width / 2 - 155, 0, 150)
-            val button2 = secondOption?.createButton(Client.options, client.currentScreen!!.width / 2 + 5, 0, 150)
+            val button1 = firstOption.createButton(client.currentScreen!!.width / 2 - 155, 0, 150)
+            val button2 = secondOption?.createButton(client.currentScreen!!.width / 2 + 5, 0, 150)
             buttons = Pair(button1, button2)
         }
 
@@ -128,26 +117,6 @@ class ModSettingsListWidget(parent: Screen) : ElementListWidget<ModSettingsListW
 
         override fun selectableChildren(): List<Selectable?> {
             return buttons.toList().filterNotNull()
-        }
-    }
-
-    companion object {
-        val getIntLabel = { gameOptions: GameOptions?, option: DoubleOption ->
-            val ratio = option.getRatio(option.get(gameOptions))
-            option.getGenericLabel(option.getValue(ratio).toInt())
-        }
-
-        val getDoubleLabel = { gameOptions: GameOptions?, option: DoubleOption ->
-            val ratio = option.getRatio(option.get(gameOptions))
-            option.getGenericLabel(LiteralText(String.format("%.2f", option.getValue(ratio))))
-        }
-
-        val getTooltipFromKey: (String) -> (MinecraftClient) -> List<OrderedText> = { key ->
-            { client ->
-                client.textRenderer.wrapLines(
-                    TranslatableText(key), 200
-                )
-            }
         }
     }
 }

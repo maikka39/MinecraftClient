@@ -3,6 +3,7 @@ package modules.cheats
 import event.EventHandler
 import events.packets.PacketEvent
 import mixinterfaces.IPlayerMoveC2SPacket
+import modules.ClientModule
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.network.ClientPlayerEntity
@@ -12,13 +13,14 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket.InteractType
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
-object Criticals : Cheat("Criticals"), Keybinded {
-    override val name = TranslatableText("cheat.modid.criticals.name")
-    override val description = TranslatableText("cheat.modid.criticals.description")
+@ClientModule
+object Criticals : Cheat(), Keybinded {
+    override val name = Text.translatable("cheat.modid.criticals.name")
+    override val description = Text.translatable("cheat.modid.criticals.description")
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(
@@ -55,6 +57,8 @@ object Criticals : Cheat("Criticals"), Keybinded {
 
     private fun sendPacket(player: ClientPlayerEntity, yDiff: Double) {
         val packet = PlayerMoveC2SPacket.PositionAndOnGround(player.x, player.y + yDiff, player.z, false)
+
+        @Suppress("KotlinConstantConditions")
         (packet as IPlayerMoveC2SPacket).isMine = true
 
         player.networkHandler.sendPacket(packet)

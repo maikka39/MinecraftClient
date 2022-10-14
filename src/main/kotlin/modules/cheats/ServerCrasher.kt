@@ -4,6 +4,7 @@ import event.EventHandler
 import events.packets.PacketEvent
 import events.world.WorldEvent
 import mixinterfaces.IPlayerMoveC2SPacket
+import modules.ClientModule
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.network.ClientPlayerEntity
@@ -12,15 +13,16 @@ import net.minecraft.client.util.InputUtil
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
 import net.minecraft.network.packet.c2s.play.TeleportConfirmC2SPacket
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 import utils.NetworkHandler
 
-object ServerCrasher : Cheat("ServerCrasher"), Keybinded {
-    override val name = TranslatableText("cheat.modid.servercrasher.name")
-    override val description = TranslatableText("cheat.modid.servercrasher.description")
+@ClientModule
+object ServerCrasher : Cheat(), Keybinded {
+    override val name = Text.translatable("cheat.modid.servercrasher.name")
+    override val description = Text.translatable("cheat.modid.servercrasher.description")
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(

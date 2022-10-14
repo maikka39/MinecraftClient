@@ -2,36 +2,34 @@ package modules.cheats
 
 import event.EventHandler
 import events.packets.PacketEvent
+import modules.ClientModule
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
-import net.minecraft.client.option.DoubleOption
 import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
 import net.minecraft.network.packet.c2s.play.VehicleMoveC2SPacket
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import org.apache.commons.lang3.tuple.MutablePair
 import org.lwjgl.glfw.GLFW
-import screens.ModSettingsListWidget
 import utils.Global.Client
+import utils.options.Option
+import utils.options.OptionCallbacks.Companion.ValidatingIntSliderCallbacks
+import utils.options.TooltipFactory
+import utils.options.ValueTextFactory
 import kotlin.math.abs
 
-object LOAntiKick : Cheat("LOAntiKick"), Keybinded {
-    override val name = TranslatableText("cheat.modid.loantikick.name")
-    override val description = TranslatableText("cheat.modid.loantikick.description")
+@ClientModule
+object LOAntiKick : Cheat(), Keybinded {
+    override val name = Text.translatable("cheat.modid.loantikick.name")
+    override val description = Text.translatable("cheat.modid.loantikick.description")
 
-    override val options: List<Option> = listOf(
-        DoubleOption(
-            "options.modid.loantikick.amountOfAxisToLockOn.name",
-            0.0,
-            2.0,
-            1.0f,
-            { amountOfAxisToLockOn.toDouble() },
-            { _, value: Double -> amountOfAxisToLockOn = value.toInt() },
-            ModSettingsListWidget.getIntLabel,
-            ModSettingsListWidget.getTooltipFromKey("options.modid.loantikick.amountOfAxisToLockOn.description"),
-        ),
+    private val amountOfAxisToLockOn = Option<Int>(
+        "options.modid.loantikick.amountOfAxisToLockOn.name",
+        TooltipFactory.fromKey("options.modid.loantikick.amountOfAxisToLockOn.description"),
+        ValueTextFactory.simpleInt,
+        ValidatingIntSliderCallbacks(0, 2),
+        2,
     )
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
@@ -39,8 +37,6 @@ object LOAntiKick : Cheat("LOAntiKick"), Keybinded {
             "key.modid.cheat.loantikick", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.modid.cheat"
         )
     )!!
-
-    private var amountOfAxisToLockOn = 2
 
     override fun onKeybindingPressed() {
         enabled = !enabled
@@ -67,7 +63,7 @@ object LOAntiKick : Cheat("LOAntiKick"), Keybinded {
         val startX = x
         val startZ = z
 
-        if (amountOfAxisToLockOn > 0) {
+        if (amountOfAxisToLockOn.value > 0) {
             val coords = calculateNewCoordinate(x, z)
             x = coords.first
             z = coords.second
@@ -90,7 +86,7 @@ object LOAntiKick : Cheat("LOAntiKick"), Keybinded {
     }
 
     private fun modify(packet: VehicleMoveC2SPacket) {
-        if (amountOfAxisToLockOn == 0) return
+        if (amountOfAxisToLockOn.value == 0) return
 
         val (x, z) = calculateNewCoordinate(packet.x, packet.z)
 
@@ -132,7 +128,7 @@ object LOAntiKick : Cheat("LOAntiKick"), Keybinded {
             if (z - lastZ < 0) fixDouble(z, Math::ceil) else fixDouble(z, Math::floor)
         )
 
-        if (amountOfAxisToLockOn == 1) {
+        if (amountOfAxisToLockOn.value == 1) {
             val xInRange = isInRange(coords.left, x, lastX)
             val zInRange = isInRange(coords.right, z, lastZ)
 

@@ -2,20 +2,22 @@ package modules.cheats
 
 import event.EventHandler
 import events.world.TickEvent
+import modules.ClientModule
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-object Speed : Cheat("Speed"), Keybinded {
-    override val name = TranslatableText("cheat.modid.speed.name")
-    override val description = TranslatableText("cheat.modid.speed.description")
+@ClientModule
+object Speed : Cheat(), Keybinded {
+    override val name = Text.translatable("cheat.modid.speed.name")
+    override val description = Text.translatable("cheat.modid.speed.description")
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(

@@ -2,19 +2,21 @@ package modules.cheats
 
 import event.EventHandler
 import events.world.TickEvent
+import modules.ClientModule
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
-object FullBright : Cheat("FullBright"), Keybinded {
-    override val name = TranslatableText("cheat.modid.fullbright.name")
-    override val description = TranslatableText("cheat.modid.fullbright.description")
+@ClientModule
+object FullBright : Cheat(), Keybinded {
+    override val name = Text.translatable("cheat.modid.fullbright.name")
+    override val description = Text.translatable("cheat.modid.fullbright.description")
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(

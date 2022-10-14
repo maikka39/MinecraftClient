@@ -5,10 +5,10 @@ import events.packets.PacketEvent
 import events.world.ConnectionEvent
 import io.netty.util.concurrent.Future
 import io.netty.util.concurrent.GenericFutureListener
-import modules.cheats.WorldGuardBypass
 import net.minecraft.network.ClientConnection
 import net.minecraft.network.NetworkState
 import net.minecraft.network.Packet
+import net.minecraft.network.PacketCallbacks
 import net.minecraft.network.listener.PacketListener
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket
 import net.minecraft.text.Text
@@ -33,19 +33,15 @@ class ClientConnectionMixin {
         if (event.cancelled) info.cancel()
     }
 
-    @Inject(at = [At("HEAD")], method = ["sendInternal"], cancellable = true)
+    @Inject(at = [At("RETURN")], method = ["sendInternal"])
     private fun sendInternal(
         packet: Packet<*>,
-        callback: GenericFutureListener<out Future<in Void?>?>,
+        callback: PacketCallbacks?,
         packetState: NetworkState,
         currentState: NetworkState,
         info: CallbackInfo
     ) {
-        if (WorldGuardBypass.enabled) {
-            if (packet !is PlayerMoveC2SPacket) {
-//                println(packet)
-            }
-        }
+        EventManager.notify(PacketEvent.Sent(packet))
     }
 
     private companion object {

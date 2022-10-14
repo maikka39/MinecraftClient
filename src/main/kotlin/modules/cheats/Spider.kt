@@ -2,33 +2,31 @@ package modules.cheats
 
 import event.EventHandler
 import events.world.TickEvent
+import modules.ClientModule
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
-import net.minecraft.client.option.DoubleOption
 import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
-import screens.ModSettingsListWidget
 import utils.Global.Client
+import utils.options.Option
+import utils.options.OptionCallbacks.Companion.ValidatingDoubleSliderCallbacks
+import utils.options.TooltipFactory
+import utils.options.ValueTextFactory
 
-object Spider : Cheat("Spider"), Keybinded {
-    override val name = TranslatableText("cheat.modid.spider.name")
-    override val description = TranslatableText("cheat.modid.spider.description")
+@ClientModule
+object Spider : Cheat(), Keybinded {
+    override val name = Text.translatable("cheat.modid.spider.name")
+    override val description = Text.translatable("cheat.modid.spider.description")
 
-    override val options: List<Option> = listOf(
-        DoubleOption(
+    private val climbingSpeed = Option<Double>(
             "options.modid.spider.climbingSpeed.name",
-            0.05,
-            1.0,
-            0.05f,
-            { climbingSpeed },
-            { _, value: Double -> climbingSpeed = value },
-            ModSettingsListWidget.getDoubleLabel,
-            ModSettingsListWidget.getTooltipFromKey("options.modid.spider.climbingSpeed.description"),
-        ),
+        TooltipFactory.fromKey("options.modid.spider.climbingSpeed.description"),
+        ValueTextFactory.roundedDouble(2),
+        ValidatingDoubleSliderCallbacks(0.05, 1.0, 0.05),
+        0.2,
     )
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
@@ -41,8 +39,6 @@ object Spider : Cheat("Spider"), Keybinded {
         enabled = !enabled
     }
 
-    private var climbingSpeed = 0.2
-
     @EventHandler(TickEvent.Post::class)
     private fun afterTick() {
         if (!enabled) return
@@ -50,9 +46,9 @@ object Spider : Cheat("Spider"), Keybinded {
         Client.player?.let {
             if (!it.horizontalCollision) return
 
-            if (it.velocity.y >= climbingSpeed) return
+            if (it.velocity.y >= climbingSpeed.value) return
 
-            it.velocity = Vec3d(it.velocity.x, climbingSpeed, it.velocity.z)
+            it.velocity = Vec3d(it.velocity.x, climbingSpeed.value, it.velocity.z)
         }
     }
 }

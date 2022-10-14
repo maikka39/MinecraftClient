@@ -1,30 +1,28 @@
 package modules.cheats
 
+import modules.ClientModule
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
-import net.minecraft.client.option.DoubleOption
 import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
-import screens.ModSettingsListWidget
+import utils.options.Option
+import utils.options.OptionCallbacks.Companion.ValidatingDoubleSliderCallbacks
+import utils.options.TooltipFactory
+import utils.options.ValueTextFactory
 
-object Reach : Cheat("Reach"), Keybinded {
-    override val name = TranslatableText("cheat.modid.reach.name")
-    override val description = TranslatableText("cheat.modid.reach.description")
+@ClientModule
+object Reach : Cheat(), Keybinded {
+    override val name = Text.translatable("cheat.modid.reach.name")
+    override val description = Text.translatable("cheat.modid.reach.description")
 
-    override val options: List<Option> = listOf(
-        DoubleOption(
-            "options.modid.reach.distance.name",
-            3.0,
-            6.0,
-            0.5f,
-            { reach.toDouble() },
-            { _, value: Double -> reach = value.toFloat() },
-            ModSettingsListWidget.getDoubleLabel,
-            ModSettingsListWidget.getTooltipFromKey("options.modid.reach.distance.description"),
-        ),
+    val reach = Option<Double>(
+        "options.modid.autofish.reelInDelay.name",
+        TooltipFactory.fromKey("options.modid.autofish.reelInDelay.description"),
+        ValueTextFactory.roundedDouble(2),
+        ValidatingDoubleSliderCallbacks(3.0, 6.0, 0.5),
+        5.0,
     )
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
@@ -32,9 +30,6 @@ object Reach : Cheat("Reach"), Keybinded {
             "key.modid.cheat.reach", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.modid.cheat"
         )
     )!!
-
-    var reach: Float = 6f // Read by ClientPlayerInteractionManagerMixin
-        private set
 
     override fun onKeybindingPressed() {
         enabled = !enabled

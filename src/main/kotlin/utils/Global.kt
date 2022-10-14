@@ -1,35 +1,22 @@
 package utils
 
 import modules.ClientModule
-import modules.cheats.*
-import modules.menuopeners.CheatMenuOpener
+import modules.cheats.Cheat
 import net.minecraft.client.MinecraftClient
+import org.reflections.Reflections
+import org.reflections.scanners.Scanners.TypesAnnotated
 
 object Global {
     val Client: MinecraftClient = MinecraftClient.getInstance()
 
-    val ClientModules: List<ClientModule> = listOf(
-        AfkEndermanFarmer,
-        AutoFish,
-        AutoHighwayBuilder,
-        Blink,
-        Criticals,
-        FastBreak,
-        Flight,
-        FullBright,
-        LOAntiKick,
-        NoFall,
-        NoRotate,
-        PlayerMoveEventBypass,
-        Reach,
-        ServerCrasher,
-        Speed,
-        SpeedMine,
-        Spider,
-        Tp,
-        WorldGuardBypass,
-        CheatMenuOpener,
-    )
+    val Modules: List<Any> = Reflections("modules").get(
+        TypesAnnotated
+            .with(ClientModule::class.java)
+            .asClass<Any>()
+            .map { it.kotlin.objectInstance }
+            .filter { it != null }
+            .map { it as Any }
+    ).toList().sortedBy { it::class.simpleName }
 
-    val Cheats: List<Cheat> = ClientModules.filterIsInstance<Cheat>()
+    val Cheats: List<Cheat> = Modules.filterIsInstance<Cheat>()
 }

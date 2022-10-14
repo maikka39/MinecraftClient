@@ -9,7 +9,8 @@ import org.lwjgl.glfw.GLFW
 import screens.ModSettingsScreen
 import utils.Global.Client
 
-object CheatMenuOpener : ClientModule, Keybinded {
+@ClientModule
+object CheatMenuOpener : Keybinded {
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(
             "key.modid.menu.cheatmenu.open", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_COMMA, "category.modid.cheat"

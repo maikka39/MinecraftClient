@@ -2,71 +2,53 @@ package modules.cheats
 
 import event.EventHandler
 import events.world.TickEvent
+import modules.ClientModule
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
-import net.minecraft.client.option.DoubleOption
 import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
-import screens.ModSettingsListWidget
 import utils.Global.Client
+import utils.options.Option
+import utils.options.OptionCallbacks.Companion.ValidatingIntSliderCallbacks
+import utils.options.TooltipFactory
+import utils.options.ValueTextFactory
 
-object AutoHighwayBuilder : Cheat("AutoHighwayBuilder"), Keybinded {
-    override val name = TranslatableText("cheat.modid.autohighwaybuilder.name")
-    override val description = TranslatableText("cheat.modid.autohighwaybuilder.description")
+@ClientModule
+object AutoHighwayBuilder : Cheat(), Keybinded {
+    override val name = Text.translatable("cheat.modid.autohighwaybuilder.name")
+    override val description = Text.translatable("cheat.modid.autohighwaybuilder.description")
 
-    override val options: List<Option> = listOf(
-        DoubleOption(
-            "options.modid.autohighwaybuilder.tunnelWidth.name",
-            1.0,
-            5.0,
-            1.0f,
-            { tunnelWidth.toDouble() },
-            { _, value: Double ->
-                tunnelWidth = value.toInt()
-            },
-            ModSettingsListWidget.getIntLabel,
-            ModSettingsListWidget.getTooltipFromKey("options.modid.autohighwaybuilder.tunnelWidth.description"),
-        ),
-        DoubleOption(
-            "options.modid.autohighwaybuilder.tunnelHeight.name",
-            1.0,
-            5.0,
-            1.0f,
-            { tunnelHeight.toDouble() },
-            { _, value: Double -> tunnelHeight = value.toInt() },
-            ModSettingsListWidget.getIntLabel,
-            ModSettingsListWidget.getTooltipFromKey("options.modid.autohighwaybuilder.tunnelHeight.description"),
-        ),
-        DoubleOption(
-            "options.modid.autohighwaybuilder.amountOfBlocksToPlacePerTick.name",
-            1.0,
-            5.0,
-            1.0f,
-            { amountOfBlocksToPlacePerTick.toDouble() },
-            { _, value: Double -> amountOfBlocksToPlacePerTick = value.toInt() },
-            ModSettingsListWidget.getIntLabel,
-            ModSettingsListWidget.getTooltipFromKey("options.modid.autohighwaybuilder.amountOfBlocksToPlacePerTick.description"),
-        ),
-        DoubleOption(
-            "options.modid.autohighwaybuilder.amountOfBlocksToBreakPerTick.name",
-            1.0,
-            5.0,
-            1.0f,
-            { amountOfBlocksToBreakPerTick.toDouble() },
-            { _, value: Double -> amountOfBlocksToBreakPerTick = value.toInt() },
-            ModSettingsListWidget.getIntLabel,
-            ModSettingsListWidget.getTooltipFromKey("options.modid.autohighwaybuilder.amountOfBlocksToBreakPerTick.description"),
-        ),
+    private val tunnelWidth = Option<Int>(
+        "options.modid.autohighwaybuilder.tunnelWidth.name",
+        TooltipFactory.fromKey("options.modid.autohighwaybuilder.tunnelWidth.description"),
+        ValueTextFactory.simpleInt,
+        ValidatingIntSliderCallbacks(1, 5),
+        2,
+    )
+
+    private val tunnelHeight = Option<Int>(
+        "options.modid.autohighwaybuilder.tunnelHeight.name",
+        TooltipFactory.fromKey("options.modid.autohighwaybuilder.tunnelHeight.description"),
+        ValueTextFactory.simpleInt,
+        ValidatingIntSliderCallbacks(1, 5),
+        3,
+    )
+
+    private val amountOfBlocksToPlacePerTick = Option<Int>(
+        "options.modid.autohighwaybuilder.amountOfBlocksToPlacePerTick.name",
+        TooltipFactory.fromKey("options.modid.autohighwaybuilder.amountOfBlocksToPlacePerTick.description"),
+        ValueTextFactory.simpleInt,
+        ValidatingIntSliderCallbacks(1, 5),
+        1,
     )
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
@@ -74,11 +56,6 @@ object AutoHighwayBuilder : Cheat("AutoHighwayBuilder"), Keybinded {
             "key.modid.cheat.autohighwaybuilder", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_H, "category.modid.cheat"
         )
     )!!
-
-    private var tunnelWidth: Int = 2
-    private var tunnelHeight: Int = 3
-    private var amountOfBlocksToPlacePerTick: Int = 1
-    private var amountOfBlocksToBreakPerTick: Int = 1
 
     override fun onKeybindingPressed() {
         enabled = !enabled
@@ -91,28 +68,28 @@ object AutoHighwayBuilder : Cheat("AutoHighwayBuilder"), Keybinded {
     fun onTick() {
         if (!enabled) return
 
-        Client.player?.let { player ->
-            val right = player.movementDirection.rotateYClockwise()
-            val left = player.movementDirection.rotateYCounterclockwise()
+        val player = Client.player ?: return
 
-            val basePos = player.blockPos.offset(player.movementDirection, 1)
+        val right = player.movementDirection.rotateYClockwise()
+        val left = player.movementDirection.rotateYCounterclockwise()
 
-            for (n in 0 until tunnelHeight) {
-                blockPlaceQueue.add(basePos.offset(left, 1).up(n))
-                blockPlaceQueue.add(basePos.offset(right, tunnelWidth).up(n))
-            }
+        val basePos = player.blockPos.offset(player.movementDirection, 1)
 
-            for (n in 0 until tunnelWidth) {
-                blockPlaceQueue.add(basePos.up(tunnelHeight).offset(right, n))
-                blockPlaceQueue.add(basePos.down(1).offset(right, n))
-            }
+        for (n in 0 until tunnelHeight.value) {
+            blockPlaceQueue.add(basePos.offset(left, 1).up(n))
+            blockPlaceQueue.add(basePos.offset(right, tunnelWidth.value).up(n))
+        }
 
-            for (n in 0 until tunnelHeight) {
-                for (m in 0 until tunnelWidth) {
-                    val pos = basePos.offset(right, m).up(n)
-                    if (!blockBreakQueue.contains(pos))
-                        blockBreakQueue.add(pos)
-                }
+        for (n in 0 until tunnelWidth.value) {
+            blockPlaceQueue.add(basePos.up(tunnelHeight.value).offset(right, n))
+            blockPlaceQueue.add(basePos.down(1).offset(right, n))
+        }
+
+        for (n in 0 until tunnelHeight.value) {
+            for (m in 0 until tunnelWidth.value) {
+                val pos = basePos.offset(right, m).up(n)
+                if (!blockBreakQueue.contains(pos))
+                    blockBreakQueue.add(pos)
             }
         }
 
@@ -126,7 +103,7 @@ object AutoHighwayBuilder : Cheat("AutoHighwayBuilder"), Keybinded {
             if (blockChanged)
                 placeCounter++
 
-            if (placeCounter >= amountOfBlocksToPlacePerTick)
+            if (placeCounter >= amountOfBlocksToPlacePerTick.value)
                 break
         }
         blocksToRemoveFromPlaceQueue.forEach(blockPlaceQueue::remove)
@@ -152,7 +129,6 @@ object AutoHighwayBuilder : Cheat("AutoHighwayBuilder"), Keybinded {
         return if (blockState.isAir || blockState.fluidState.isStill) {
             Client.interactionManager!!.interactBlock(
                 Client.player,
-                Client.world,
                 Hand.OFF_HAND,
                 BlockHitResult(Vec3d.ofCenter(pos), Direction.UP, pos, false)
             )
@@ -164,15 +140,19 @@ object AutoHighwayBuilder : Cheat("AutoHighwayBuilder"), Keybinded {
     private fun breakBlockIfNotAir(pos: BlockPos): Boolean {
         val blockState = Client.world!!.getBlockState(pos)
         return if (!blockState.isAir) {
-            Client.interactionManager!!.sendPlayerAction(
-                PlayerActionC2SPacket.Action.START_DESTROY_BLOCK,
-                pos,
-                Direction.DOWN
+            Client.networkHandler!!.sendPacket(
+                PlayerActionC2SPacket(
+                    PlayerActionC2SPacket.Action.START_DESTROY_BLOCK,
+                    pos,
+                    Direction.DOWN
+                )
             )
-            Client.interactionManager!!.sendPlayerAction(
-                PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK,
-                pos,
-                Direction.DOWN
+            Client.networkHandler!!.sendPacket(
+                PlayerActionC2SPacket(
+                    PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK,
+                    pos,
+                    Direction.DOWN
+                )
             )
             Client.networkHandler!!.sendPacket(HandSwingC2SPacket(Hand.MAIN_HAND))
             true

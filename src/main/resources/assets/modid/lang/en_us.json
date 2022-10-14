@@ -3,6 +3,8 @@
   "other.modid.enabledcheat": "Enabled %s!",
   "other.modid.disabledcheat": "Disabled %s!",
   "other.modid.enabled": "Enabled",
+  "other.modid.on": "On",
+  "other.modid.off": "Off",
   "menu.modid.mod_settings": "Cheats",
   "options.modid.autofish.reelInDelay.name": "Reel in delay ticks",
   "options.modid.autofish.reelInDelay.description": "Amount of ticks to wait between the fish biting and reeling in the fishing rod.",

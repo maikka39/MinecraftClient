@@ -1,60 +1,45 @@
 package modules.cheats
 
+import modules.ClientModule
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
-import net.minecraft.client.option.DoubleOption
 import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.option.Option
 import net.minecraft.client.util.InputUtil
 import net.minecraft.text.Text
-import net.minecraft.text.TranslatableText
 import org.lwjgl.glfw.GLFW
-import screens.ModSettingsListWidget
 import utils.Global.Client
+import utils.options.Option
+import utils.options.OptionCallbacks.Companion.ValidatingDoubleSliderCallbacks
+import utils.options.TooltipFactory
+import utils.options.ValueTextFactory
 
-object Tp : Cheat("Tp"), Keybinded {
-    override var enabled = true
+@ClientModule
+object Tp : Cheat(), Keybinded {
+    override val name = Text.translatable("cheat.modid.tp.name")
+    override val description = Text.translatable("cheat.modid.tp.description")
 
-    override val name = TranslatableText("cheat.modid.tp.name")
-    override val description = TranslatableText("cheat.modid.tp.description")
-
-    override val options: List<Option> = listOf(
-        DoubleOption(
+    private val deltaX = Option<Double>(
             "options.modid.tp.deltaX.name",
-            -10.0,
-            10.0,
-            0.5f,
-            { deltaX.toDouble() },
-            { _, value: Double ->
-                deltaX = value.toInt()
-            },
-            ModSettingsListWidget.getIntLabel,
-            ModSettingsListWidget.getTooltipFromKey("options.modid.tp.deltaX.description"),
-        ),
-        DoubleOption(
+        TooltipFactory.fromKey("options.modid.tp.deltaX.description"),
+        ValueTextFactory.roundedDouble(1),
+        ValidatingDoubleSliderCallbacks(-10.0, 10.0, 0.5),
+        0.0,
+    )
+
+    private val deltaY = Option<Double>(
             "options.modid.tp.deltaY.name",
-            -10.0,
-            10.0,
-            0.5f,
-            { deltaY.toDouble() },
-            { _, value: Double ->
-                deltaY = value.toInt()
-            },
-            ModSettingsListWidget.getIntLabel,
-            ModSettingsListWidget.getTooltipFromKey("options.modid.tp.deltaY.description"),
-        ),
-        DoubleOption(
+        TooltipFactory.fromKey("options.modid.tp.deltaY.description"),
+        ValueTextFactory.roundedDouble(1),
+        ValidatingDoubleSliderCallbacks(-10.0, 10.0, 0.5),
+        0.0,
+    )
+
+    private val deltaZ = Option<Double>(
             "options.modid.tp.deltaZ.name",
-            -10.0,
-            10.0,
-            0.5f,
-            { deltaZ.toDouble() },
-            { _, value: Double ->
-                deltaZ = value.toInt()
-            },
-            ModSettingsListWidget.getIntLabel,
-            ModSettingsListWidget.getTooltipFromKey("options.modid.tp.deltaZ.description"),
-        ),
+        TooltipFactory.fromKey("options.modid.tp.deltaZ.description"),
+        ValueTextFactory.roundedDouble(1),
+        ValidatingDoubleSliderCallbacks(-10.0, 10.0, 0.5),
+        0.0,
     )
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
@@ -63,15 +48,11 @@ object Tp : Cheat("Tp"), Keybinded {
         )
     )!!
 
-    private var deltaX: Int = 0
-    private var deltaY: Int = 0
-    private var deltaZ: Int = 0
-
     override fun onKeybindingPressed() {
         if (!enabled) return
 
         val player = Client.player!!
         player.sendMessage(Text.of("TPing!"), false)
-        player.setPosition(player.x + deltaX, player.y + deltaY, player.z + deltaZ)
+        player.setPosition(player.x + deltaX.value, player.y + deltaY.value, player.z + deltaZ.value)
     }
 }

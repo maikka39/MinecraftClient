@@ -3,11 +3,13 @@ accessWidener	v1 named
 # Classes
 accessible class net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractTypeHandler
 accessible class net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractType
+accessible class net/minecraft/client/option/SimpleOption$Callbacks
+accessible class net/minecraft/client/option/SimpleOption$SliderCallbacks
 
 # Methods
-accessible method net/minecraft/client/network/ClientPlayerInteractionManager sendPlayerAction (Lnet/minecraft/network/packet/c2s/play/PlayerActionC2SPacket$Action;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;)V
-accessible method net/minecraft/client/option/Option getGenericLabel (I)Lnet/minecraft/text/Text;
-accessible method net/minecraft/client/option/Option getGenericLabel (Lnet/minecraft/text/Text;)Lnet/minecraft/text/Text;
+#accessible method net/minecraft/client/network/ClientPlayerInteractionManager sendPlayerAction (Lnet/minecraft/network/packet/c2s/play/PlayerActionC2SPacket$Action;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;)V
+#accessible method net/minecraft/client/option/SimpleOption getGenericLabel (I)Lnet/minecraft/text/Text;
+#accessible method net/minecraft/client/option/Option getGenericLabel (Lnet/minecraft/text/Text;)Lnet/minecraft/text/Text;
 
 # Fields
 accessible field net/minecraft/client/network/ClientPlayerInteractionManager currentBreakingProgress F

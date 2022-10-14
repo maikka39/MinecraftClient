@@ -5,7 +5,7 @@ import mu.KotlinLogging
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import utils.DelayedAction
-import utils.Global.ClientModules
+import utils.Global.Modules
 
 val Logger = KotlinLogging.logger {}
 
@@ -13,7 +13,7 @@ val Logger = KotlinLogging.logger {}
 fun init() {
     Logger.info("Init")
     DelayedAction // Initialize object
-    ClientModules.forEach { registerEventsInObject(it) }
+    Modules.forEach { registerEventsInObject(it) }
     EventManager.notify(InitializeEvent())
 }
 

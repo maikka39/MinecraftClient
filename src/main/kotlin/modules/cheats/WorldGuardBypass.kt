@@ -1,19 +1,21 @@
 package modules.cheats
 
+import modules.ClientModule
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.glfw.GLFW
 import utils.PositionDirection
 
-object WorldGuardBypass : PaperPlayerMoveEventBypass("WorldGuardBypass"), Keybinded {
-    override val name = TranslatableText("cheat.modid.worldguardbypass.name")
-    override val description = TranslatableText("cheat.modid.worldguardbypass.description")
+@ClientModule
+object WorldGuardBypass : PaperPlayerMoveEventBypass(), Keybinded {
+    override val name = Text.translatable("cheat.modid.worldguardbypass.name")
+    override val description = Text.translatable("cheat.modid.worldguardbypass.description")
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(

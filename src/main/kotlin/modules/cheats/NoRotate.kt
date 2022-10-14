@@ -2,18 +2,20 @@ package modules.cheats
 
 import event.EventHandler
 import events.packets.PacketEvent
+import modules.ClientModule
 import modules.Keybinded
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
 
-object NoRotate : Cheat("NoRotate"), Keybinded {
-    override val name = TranslatableText("cheat.modid.norotate.name")
-    override val description = TranslatableText("cheat.modid.norotate.description")
+@ClientModule
+object NoRotate : Cheat(), Keybinded {
+    override val name = Text.translatable("cheat.modid.norotate.name")
+    override val description = Text.translatable("cheat.modid.norotate.description")
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(

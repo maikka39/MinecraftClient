@@ -3,7 +3,6 @@ package mixins
 import net.minecraft.client.gui.screen.DisconnectedScreen
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
-import net.minecraft.text.LiteralText
 import net.minecraft.text.Text
 import org.spongepowered.asm.mixin.Final
 import org.spongepowered.asm.mixin.Mixin
@@ -33,7 +32,7 @@ abstract class DisconnectedScreenMixin(title: Text?) : Screen(title) {
 
         addDrawableChild(ButtonWidget(
             backButtonX, backButtonY + 24, 200,
-            20, LiteralText("Reconnect")
+            20, Text.literal("Reconnect")
         ) {
             LastServerRememberer.reconnect(parent)
         })

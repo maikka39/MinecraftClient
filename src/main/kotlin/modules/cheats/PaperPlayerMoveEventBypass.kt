@@ -13,7 +13,7 @@ import utils.Global
 import utils.NetworkHandler
 import utils.PositionDirection
 
-abstract class PaperPlayerMoveEventBypass(id: String) : Cheat(id) {
+abstract class PaperPlayerMoveEventBypass : Cheat() {
     private var teleportId = -1
     private var previousPosDir: PositionDirection =
         PositionDirection(Vec3d(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE), Float.MAX_VALUE, Float.MAX_VALUE)
@@ -28,6 +28,11 @@ abstract class PaperPlayerMoveEventBypass(id: String) : Cheat(id) {
     }
 
     protected fun sendPos(player: ClientPlayerEntity, pos: Vec3d, yaw: Float, pitch: Float) {
+        println(pos.x)
+        println(pos.y)
+        println(pos.z)
+        println(yaw)
+        println(pitch)
         val packet = PlayerMoveC2SPacket.Full(pos.x, pos.y, pos.z, yaw, pitch, true)
         NetworkHandler.sendPacket(player.networkHandler, packet)
         lastSentPos = pos
