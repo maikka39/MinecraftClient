@@ -40,3 +40,4 @@ mutable field net/minecraft/network/packet/s2c/play/PlayerPositionLookS2CPacket 
 accessible field net/minecraft/network/packet/s2c/play/PlayerPositionLookS2CPacket pitch F
 accessible field net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket type Lnet/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractTypeHandler;
 accessible field net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket entityId I
+accessible field net/minecraft/network/packet/s2c/play/GameStateChangeS2CPacket$Reason id I

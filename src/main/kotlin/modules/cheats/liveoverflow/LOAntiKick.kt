@@ -1,9 +1,10 @@
-package modules.cheats
+package modules.cheats.liveoverflow
 
 import event.EventHandler
 import events.packets.PacketEvent
 import modules.ClientModule
 import modules.Keybinded
+import modules.cheats.Cheat
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
@@ -21,12 +22,12 @@ import kotlin.math.abs
 
 @ClientModule
 object LOAntiKick : Cheat(), Keybinded {
-    override val name = Text.translatable("cheat.modid.loantikick.name")
-    override val description = Text.translatable("cheat.modid.loantikick.description")
+    override val name = Text.translatable("cheat.modid.liveoverflow.loantikick.name")
+    override val description = Text.translatable("cheat.modid.liveoverflow.loantikick.description")
 
     private val amountOfAxisToLockOn = Option<Int>(
-        "options.modid.loantikick.amountOfAxisToLockOn.name",
-        TooltipFactory.fromKey("options.modid.loantikick.amountOfAxisToLockOn.description"),
+        "options.modid.liveoverflow.loantikick.amountOfAxisToLockOn.name",
+        TooltipFactory.fromKey("options.modid.liveoverflow.loantikick.amountOfAxisToLockOn.description"),
         ValueTextFactory.simpleInt,
         ValidatingIntSliderCallbacks(0, 2),
         2,
@@ -34,7 +35,7 @@ object LOAntiKick : Cheat(), Keybinded {
 
     override val keyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(
-            "key.modid.cheat.loantikick", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.modid.cheat"
+            "key.modid.cheat.liveoverflow.loantikick", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.modid.cheat"
         )
     )!!
 
