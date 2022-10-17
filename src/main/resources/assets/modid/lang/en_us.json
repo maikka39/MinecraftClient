@@ -8,6 +8,8 @@
   "menu.modid.mod_settings": "Cheats",
   "options.modid.liveoverflow.loantikick.amountOfAxisToLockOn.name": "Axis",
   "options.modid.liveoverflow.loantikick.amountOfAxisToLockOn.description": "Defines the amount of axis to bind to, the server accepts just the x or z axis, but binding to both is more stable.",
+  "options.modid.liveoverflow.loplaybypass.secondsToIgnoreGameModeUpdate.name": "Seconds to work",
+  "options.modid.liveoverflow.loplaybypass.secondsToIgnoreGameModeUpdate.description": "Defines the amount of seconds from joining the world to ignore gamemode updates.",
   "options.modid.autofish.reelInDelay.name": "Reel in delay ticks",
   "options.modid.autofish.reelInDelay.description": "Amount of ticks to wait between the fish biting and reeling in the fishing rod.",
   "options.modid.autofish.castDelay.name": "Cast delay ticks",

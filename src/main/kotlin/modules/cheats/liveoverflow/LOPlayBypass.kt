@@ -14,6 +14,10 @@ import net.minecraft.network.packet.s2c.play.*
 import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
 import utils.Global.Client
+import utils.options.Option
+import utils.options.OptionCallbacks
+import utils.options.TooltipFactory
+import utils.options.ValueTextFactory
 
 @ClientModule
 object LOPlayBypass : Cheat(), Keybinded {
@@ -32,6 +36,14 @@ object LOPlayBypass : Cheat(), Keybinded {
     override fun onKeybindingPressed() {
         enabled = !enabled
     }
+
+    private val secondsToIgnoreGameModeUpdate = Option<Int>(
+        "options.modid.liveoverflow.loplaybypass.secondsToIgnoreGameModeUpdate.name",
+        TooltipFactory.fromKey("options.modid.liveoverflow.loplaybypass.secondsToIgnoreGameModeUpdate.description"),
+        ValueTextFactory.simpleInt,
+        OptionCallbacks.Companion.ValidatingIntSliderCallbacks(1, 12),
+        6,
+    )
 
     private var worldJoinTimestamp: Long = 0
 
@@ -64,7 +76,7 @@ object LOPlayBypass : Cheat(), Keybinded {
             }
 
             GameStateChangeS2CPacket.GAME_MODE_CHANGED -> {
-                if (System.currentTimeMillis() - worldJoinTimestamp < 3000) event.cancel()
+                if (System.currentTimeMillis() - worldJoinTimestamp < secondsToIgnoreGameModeUpdate.value * 1000) event.cancel()
             }
         }
     }
