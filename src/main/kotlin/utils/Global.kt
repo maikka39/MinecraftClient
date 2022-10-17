@@ -1,5 +1,6 @@
 package utils
 
+import Logger
 import modules.ClientModule
 import modules.cheats.Cheat
 import net.minecraft.client.MinecraftClient
@@ -13,7 +14,10 @@ object Global {
         TypesAnnotated
             .with(ClientModule::class.java)
             .asClass<Any>()
-            .map { it.kotlin.objectInstance }
+            .map {
+                Logger.info("Loading module: ${it.simpleName}")
+                it.kotlin.objectInstance
+            }
             .filter { it != null }
             .map { it as Any }
     ).toList().sortedBy { it::class.simpleName }
